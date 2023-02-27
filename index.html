@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pencarian Nama Dosen JTI Polinema</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<div id="loading-animation">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+</div>
+
+<body>
+    <h1>Pencarian Dosen</h1>
+    <form>
+        <label for="search">Masukkan Nama Dosen :</label>
+        <input type="text" id="search" name="search">
+        <input type="submit" value="Search">
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+        // Get the form
+        const form = document.querySelector('form');
+
+        // Listen for form submission
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Get the search query
+            const search = form.search.value;
+
+            // Make a request to the server to search for the MAC address
+            fetch('/search.php', {
+                method: 'POST',
+                body: JSON.stringify({ search }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Display the results
+                    const results = document.querySelector('#results');
+                    results.innerHTML = `
+                    <h2>Results</h2>
+                    <p>Name: ${data.name}</p>
+                    <p>Email: ${data.email}</p>
+                    <p>MAC Address: ${data.mac_address}</p>
+                `;
+                })
+                .catch(error => console.error(error));
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const loadingAnimation = document.querySelector("#loading-animation");
+            // hide loading animation after content is loaded
+            loadingAnimation.style.display = "none";
+        });
+    </script>
+
+</body>
+
+</html>
