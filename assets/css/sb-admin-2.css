@@ -10656,6 +10656,7 @@ button.bg-dark:focus {
 }
 
 .text-center {
+  margin-top: 5px;
   text-align: center !important;
 }
 
@@ -10908,7 +10909,6 @@ a.text-dark:focus {
   tr,
   img {
     page-break-inside: avoid;
-    text-align: left;
   }
 
   p,
