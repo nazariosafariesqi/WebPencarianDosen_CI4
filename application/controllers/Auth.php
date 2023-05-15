@@ -102,7 +102,7 @@ class Auth extends CI_Controller
             $data = [
                 'name' => htmlspecialchars($this->input->post('name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
-                'image' => 'default.jpg',
+                'image' => 'default2.jpg',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'role_id' => 2,
                 'is_active' => 1,
@@ -131,5 +131,10 @@ class Auth extends CI_Controller
             </div>'
         );
         redirect('auth');
+    }
+
+    public function blocked()
+    {
+        $this->load->view('auth/blocked');
     }
 }
