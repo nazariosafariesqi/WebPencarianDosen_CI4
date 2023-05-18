@@ -22,6 +22,7 @@
                     <?php foreach ($user as $u) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
+
                             <td><?= $user['name']; ?></td>
                             <td><?= $user['email']; ?></td>
                             <td>
@@ -57,7 +58,7 @@
                     <form>
                         <div class="form-group">
                             <label for="exampleInputName">Name</label>
-                            <input type="name" class="form-control" id="name" placeholder="Name">
+                            <input type="name" class="form-control" id="name" placeholder="Enter name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
