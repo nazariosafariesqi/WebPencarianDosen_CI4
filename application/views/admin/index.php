@@ -24,34 +24,63 @@
     }
 
     $API = new RouterOSAPI();
-    $routerIPs = array('192.168.88.1'); // Daftar IP router
+    $routerIPs = array('192.168.73.1'); // Daftar IP router
+    //, '192.168.60.1', '192.168.56.1'
 
     foreach ($routerIPs as $routerIP) {
-        if ($API->connect($routerIP, 'nazario', 'nazario')) {
+        if ($API->connect($routerIP, 'nazario', 'n4z4r10')) {
             echo "Koneksi ke Mikrotik ($routerIP) sukses" . "<br>";
 
             // Mengambil IP address
             $API->write('/ip/address/print');
             $ipAddresses = $API->read();
 
-            echo "IP Address:";
+            echo "IP Address: ";
             foreach ($ipAddresses as $address) {
-                echo $address['address'];
+                echo  "<br>" . $address['address'];
             }
 
             // Mengambil DHCP leases
             $API->write('/ip/dhcp-server/lease/print');
             $leases = $API->read();
 
-            echo "<br> DHCP Leases = ";
+            echo "<br>DHCP Leases:";
             foreach ($leases as $lease) {
                 //var_dump($lease);
-                echo " <br> IP: " . $lease['address'] . "<br> MAC: " . $lease['mac-address']
-                    . "<br> Active Host Name: " . $lease['host-name']
-                    . "<br> Time Expires: " . $lease['expires-after']
-                    . "<br> LastSeen: " . $lease['last-seen'];
-            }
+                echo "<br> IP: " . $lease['address'];
 
+                if (isset($lease['mac-address'])) {
+                    echo "<br> MAC: " . $lease['mac-address'];
+                }
+
+                if (isset($lease['host-name'])) {
+                    echo "<br> Active Host Name: " . $lease['host-name'];
+                }
+
+                if (isset($lease['expires-after'])) {
+                    echo "<br> Time Expires: " . $lease['expires-after'];
+                }
+
+                if (isset($lease['last-seen'])) {
+                    echo "<br> Last Seen: " . $lease['last-seen'];
+                }
+
+                // Memasukkan data ke dalam database
+                $ipAddress = $lease['address'];
+                $macAddress = $lease['mac-address'];
+                $activeHostName = $lease['host-name'];
+                $timeExpires = $lease['expires-after'];
+                $lastSeen = $lease['last-seen'];
+
+                $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen ) VALUES 
+                ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
+
+                if ($conn->query($sql) === TRUE) {
+                    echo "<br>Data berhasil dimasukkan ke dalam database";
+                } else {
+                    echo "<br>Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
+                }
+            }
             $API->disconnect();
         } else {
             echo "Tidak bisa terhubung ke Mikrotik ($routerIP)";
