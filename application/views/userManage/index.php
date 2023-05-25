@@ -10,26 +10,38 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">No</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1 ?>
                     <?php foreach ($user as $u) : ?>
-                        <tr>
-                            <th scope="row"><?= $i; ?></th>
 
-                            <td><?= $user['name']; ?></td>
-                            <td><?= $user['email']; ?></td>
+                        <tr>
+
+                            <th scope="row"><?= $i++; ?></th>
+
+                            <td><?= $u->name; ?></td>
+                            <td><?= $u->email; ?></td>
+                            <td><?php if ($u->role_id == 1) {
+                                    echo "Administrator";
+                                } else if ($u->role_id == 2) {
+                                    echo "Member";
+                                } else {
+                                    echo "-";
+                                } ?>
+                            </td>
                             <td>
                                 <a href="" class="badge badge-success">Edit</a>
                                 <a href="" class="badge badge-danger">Delete</a>
                             </td>
+
                         </tr>
-                        <?php $i++ ?>
+
                     <?php endforeach; ?>
                 </tbody>
             </table>

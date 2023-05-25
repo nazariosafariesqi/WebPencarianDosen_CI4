@@ -23,7 +23,7 @@ class Admin extends CI_Controller
 
     public function editRouter()
     {
-        $data['title'] = 'Dashboard';
+        $data['title'] = 'Edit Router';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -35,7 +35,7 @@ class Admin extends CI_Controller
 
     public function editPemilik()
     {
-        $data['title'] = 'Dashboard';
+        $data['title'] = 'Edit Pemilik';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -47,7 +47,7 @@ class Admin extends CI_Controller
 
     public function editRuangan()
     {
-        $data['title'] = 'Dashboard';
+        $data['title'] = 'Edit Ruangan';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);

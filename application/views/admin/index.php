@@ -24,8 +24,8 @@
     }
 
     $API = new RouterOSAPI();
-    $routerIPs = array('192.168.73.1'); // Daftar IP router
-    //, '192.168.60.1', '192.168.56.1'
+    $routerIPs = array('192.168.88.1'); // Daftar IP router
+    //, '192.168.73.1','192.168.60.1', '192.168.56.1'
 
     foreach ($routerIPs as $routerIP) {
         if ($API->connect($routerIP, 'nazario', 'n4z4r10')) {
