@@ -6,6 +6,7 @@ class UserManage extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('form_validation');
     }
 
     public function index()
@@ -13,13 +14,134 @@ class UserManage extends CI_Controller
         $data['title'] = 'User Management';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-        $data['user'] = $this->db->get('user')->result();
-        $data['user_role'] = $this->db->get('user_role')->result();
+        $data['user'] = $this->db->get('user')->result_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('userManage/index', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function insert()
+    {
+        $data['title'] = 'User Management';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->db->get('user')->result_array();
+
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+            'is_unique' => 'This email has already been registered!'
+        ]);
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]', [
+            'min_length' => 'Password too short!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar2', $data);
+            $this->load->view('userManage/index', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $role_id = $this->input->post('role_id');
+            if ($role_id == 1) {
+                $role = 'Administrator';
+            } elseif ($role_id == 2) {
+                $role = 'Member';
+            }
+
+            $this->db->insert(
+                'user',
+                [
+                    'name' => $this->input->post('name'),
+                    'email' => $this->input->post('email'),
+                    'role' => $role,
+                    'image' => 'default2.jpg',
+                    'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                    'role_id' => $role_id,
+                    'is_active' => '1',
+                    'date_created' => date('Y-m-d H:i:s')
+                ]
+            );
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">
+                    New User Added
+                    </div>'
+            );
+            redirect('userManage/index');
+        }
+    }
+
+    public  function update()
+    {
+        $data['title'] = 'User Management';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->db->get('user')->result_array();
+
+        $this->form_validation->set_rules('name-edit', 'Name', 'trim');
+        $this->form_validation->set_rules('email-edit', 'Email', 'trim|valid_email', [
+            'is_unique' => 'This email has already been registered!'
+        ]);
+        $this->form_validation->set_rules('password1', 'New Password', 'trim|min_length[3]|matches[password2]', [
+            'matches' => 'Password dont match!',
+            'min_length' => 'Password too short!'
+        ]);
+        $this->form_validation->set_rules('password2', 'Re-type Password', 'trim|matches[password1]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar2', $data);
+            $this->load->view('userManage/index', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $user_id = $this->input->post('user_id');
+            $name = $this->input->post('name-edit');
+            $email = $this->input->post('email-edit');
+            $password = $this->input->post('password2');
+
+            $data = [
+                'name' => $name,
+                'email' => $email
+            ];
+
+            if (!empty($email)) {
+                $data['email'] = $email;
+            }
+
+            if (!empty($password)) {
+                $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+            }
+
+            $this->db->where('id', $user_id);
+            $this->db->update('user', $data);
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">
+                    User Data Updated
+                </div>'
+            );
+            redirect('userManage/index');
+        }
+    }
+
+    public function delete($user_id)
+    {
+        $this->db->where('id', $user_id);
+        $this->db->delete('user');
+
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            User Data Deleted
+        </div>'
+        );
+        redirect('userManage/index');
     }
 }
