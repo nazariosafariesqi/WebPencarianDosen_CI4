@@ -1,113 +1,143 @@
+<html>
+
+
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
+    <div class="row">
+        <div class="col-lg">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Ip Address</th>
+                        <th scope="col">Mac Address</th>
+                        <th scope="col">Host Name</th>
+                        <th scope="col">Expires</th>
+                        <th scope="col">Last Seen</th>
+                        <th scope="col">Waktu Ambil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1 ?>
+                    <?php foreach ($leases as $l) : ?>
+                        <tr>
+                            <th scope="row"><?= $i++; ?></th>
+                            <td><?= $l['ip_address']; ?></td>
+                            <td><?= $l['mac_address']; ?></td>
+                            <td><?= $l['active_host_name']; ?></td>
+                            <td><?= $l['time_expires']; ?></td>
+                            <td><?= $l['last_seen']; ?></td>
+                            <td><?= $l['waktu_ambil']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
-
-<div class="col">
-    <?php
-    require('api.php');
-
-    // Koneksi database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "wpd";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Koneksi database gagal: " . $conn->connect_error);
-    } else {
-        echo "Koneksi database berhasil & ";
-    }
-
-    $API = new RouterOSAPI();
-    $routerIPs = array('192.168.88.1'); // Daftar IP router
-    //, '192.168.73.1','192.168.60.1', '192.168.56.1'
-
-    foreach ($routerIPs as $routerIP) {
-        if ($API->connect($routerIP, 'nazario', 'n4z4r10')) {
-            echo "Koneksi ke Mikrotik ($routerIP) sukses" . "<br>";
-
-            // Mengambil IP address
-            $API->write('/ip/address/print');
-            $ipAddresses = $API->read();
-
-            echo "IP Address: ";
-            foreach ($ipAddresses as $address) {
-                echo  "<br>" . $address['address'];
-            }
-
-            // Mengambil DHCP leases
-            $API->write('/ip/dhcp-server/lease/print');
-            $leases = $API->read();
-
-            echo "<br>DHCP Leases:";
-            foreach ($leases as $lease) {
-                //var_dump($lease);
-                echo "<br> IP: " . $lease['address'];
-
-                if (isset($lease['mac-address'])) {
-                    echo "<br> MAC: " . $lease['mac-address'];
-                }
-
-                if (isset($lease['host-name'])) {
-                    echo "<br> Active Host Name: " . $lease['host-name'];
-                }
-
-                if (isset($lease['expires-after'])) {
-                    echo "<br> Time Expires: " . $lease['expires-after'];
-                }
-
-                if (isset($lease['last-seen'])) {
-                    echo "<br> Last Seen: " . $lease['last-seen'];
-                }
-
-                // Memasukkan data ke dalam database
-                $ipAddress = isset($lease['address']) ? $lease['address'] : '';
-                $macAddress = isset($lease['mac-address']) ? $lease['mac-address'] : '';
-                $activeHostName = isset($lease['host-name']) ? $lease['host-name'] : '';
-                $timeExpires = isset($lease['expires-after']) ? $lease['expires-after'] : '';
-                $lastSeen = isset($lease['last-seen']) ? $lease['last-seen'] : '';
-
-                $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen) 
-                VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
-
-                if ($conn->query($sql) === TRUE) {
-                    echo "<br>Data berhasil dimasukkan ke dalam database";
-                } else {
-                    echo "<br>Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
-                }
-            }
-            $API->disconnect();
-        } else {
-            echo "Tidak bisa terhubung ke Mikrotik ($routerIP)";
-            echo $API->error_str;
-        }
-    }
-
-    //$API = new RouterOSAPI();
-
-    //if ($API->connect('192.168.88.1', 'nazario', 'nazario')) {
-    //    $API->debug = true;
-    //    echo "Koneksi Mikrotik Sukses ";
-    //} else {
-    //    echo "Tidak Bisa Koneksi ke Mikrotik ";
-    //    echo $API->error_str;
-    //}
-
-    // Mengambil MAC address
-    //$API->write('/interface/ethernet/print');
-    //$ethernetInterfaces = $API->read();
-
-    //echo "MAC Address:" . PHP_EOL;
-    //foreach ($ethernetInterfaces as $interface) {
-    //    echo "- " . $interface['mac-address'] . PHP_EOL;
-    //}
-    ?>
-</div>
+<!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
+
+<!-- Modal Add New User -->
+<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newUserModalLabel">Add New User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('UserManage/insert'); ?>" method="POST">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputName">Name</label>
+                            <input type="name" class="form-control" id="name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit / Update -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('UserManage/update'); ?>" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="user_id" id="user_id">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name-edit" name="name-edit" placeholder="Edit name" id="user_id" data-id="<?= $u['name'] ?>;">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email-edit" name="email-edit" aria-describedby="emailHelp" placeholder="Edit email" id="user_id" data-id="<?= $u['email'] ?>;">
+                    </div>
+                    <div class="password">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="New password">
+                    </div>
+                    <div class="password">
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-type password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="update" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete User-->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger" href="<?= base_url('UserManage/delete/' . $u['id']); ?>">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,8 +12,8 @@
                 <i class="fa fa-bars"></i>
             </button>
             <input type="text" class="form-control bg-grey border-9 small" placeholder="Search ..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+            <div class="input-group-append ml-1">
+                <button class="btn btn-info" type="submit">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
             </div>

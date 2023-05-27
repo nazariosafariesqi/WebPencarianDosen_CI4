@@ -1,19 +1,4 @@
 <?php
-/*****************************
- *
- * RouterOS PHP API class v1.6
- * Author: Denis Basta
- * Contributors:
- *    Nick Barnes
- *    Ben Menking (ben [at] infotechsc [dot] com)
- *    Jeremy Jefferson (http://jeremyj.com)
- *    Cristian Deluxe (djcristiandeluxe [at] gmail [dot] com)
- *    Mikhail Moskalev (mmv.rus [at] gmail [dot] com)
- *
- * http://www.mikrotik.com
- * http://wiki.mikrotik.com/wiki/API_PHP_class
- *
- ******************************/
 
 class RouterosAPI
 {
@@ -33,11 +18,11 @@ class RouterosAPI
     public function isIterable($var)
     {
         return $var !== null
-                && (is_array($var)
+            && (is_array($var)
                 || $var instanceof Traversable
                 || $var instanceof Iterator
                 || $var instanceof IteratorAggregate
-                );
+            );
     }
 
     /**
@@ -96,10 +81,10 @@ class RouterosAPI
     {
         for ($ATTEMPT = 1; $ATTEMPT <= $this->attempts; $ATTEMPT++) {
             $this->connected = false;
-            $PROTOCOL = ($this->ssl ? 'ssl://' : '' );
+            $PROTOCOL = ($this->ssl ? 'ssl://' : '');
             $context = stream_context_create(array('ssl' => array('ciphers' => 'ADH:ALL', 'verify_peer' => false, 'verify_peer_name' => false)));
             $this->debug('Connection attempt #' . $ATTEMPT . ' to ' . $PROTOCOL . $ip . ':' . $this->port . '...');
-            $this->socket = @stream_socket_client($PROTOCOL . $ip.':'. $this->port, $this->error_no, $this->error_str, $this->timeout, STREAM_CLIENT_CONNECT,$context);
+            $this->socket = @stream_socket_client($PROTOCOL . $ip . ':' . $this->port, $this->error_no, $this->error_str, $this->timeout, STREAM_CLIENT_CONNECT, $context);
             if ($this->socket) {
                 socket_set_timeout($this->socket, $this->timeout);
                 $this->write('/login', false);
@@ -152,7 +137,7 @@ class RouterosAPI
     public function disconnect()
     {
         // let's make sure this socket is still valid.  it may have been closed by something else
-        if( is_resource($this->socket) ) {
+        if (is_resource($this->socket)) {
             fclose($this->socket);
         }
         $this->connected = false;
@@ -174,11 +159,11 @@ class RouterosAPI
             $CURRENT     = null;
             $singlevalue = null;
             foreach ($response as $x) {
-                if (in_array($x, array('!fatal','!re','!trap'))) {
+                if (in_array($x, array('!fatal', '!re', '!trap'))) {
                     if ($x == '!re') {
-                        $CURRENT =& $PARSED[];
+                        $CURRENT = &$PARSED[];
                     } else {
-                        $CURRENT =& $PARSED[$x][];
+                        $CURRENT = &$PARSED[$x][];
                     }
                 } elseif ($x != '!done') {
                     $MATCHES = array();
@@ -216,11 +201,11 @@ class RouterosAPI
             $CURRENT     = null;
             $singlevalue = null;
             foreach ($response as $x) {
-                if (in_array($x, array('!fatal','!re','!trap'))) {
+                if (in_array($x, array('!fatal', '!re', '!trap'))) {
                     if ($x == '!re') {
-                        $CURRENT =& $PARSED[];
+                        $CURRENT = &$PARSED[];
                     } else {
-                        $CURRENT =& $PARSED[$x][];
+                        $CURRENT = &$PARSED[$x][];
                     }
                 } elseif ($x != '!done') {
                     $MATCHES = array();
