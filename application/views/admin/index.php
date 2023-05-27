@@ -66,14 +66,14 @@
                 }
 
                 // Memasukkan data ke dalam database
-                $ipAddress = $lease['address'];
-                $macAddress = $lease['mac-address'];
-                $activeHostName = $lease['host-name'];
-                $timeExpires = $lease['expires-after'];
-                $lastSeen = $lease['last-seen'];
+                $ipAddress = isset($lease['address']) ? $lease['address'] : '';
+                $macAddress = isset($lease['mac-address']) ? $lease['mac-address'] : '';
+                $activeHostName = isset($lease['host-name']) ? $lease['host-name'] : '';
+                $timeExpires = isset($lease['expires-after']) ? $lease['expires-after'] : '';
+                $lastSeen = isset($lease['last-seen']) ? $lease['last-seen'] : '';
 
-                $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen ) VALUES 
-                ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
+                $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen) 
+                VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
 
                 if ($conn->query($sql) === TRUE) {
                     echo "<br>Data berhasil dimasukkan ke dalam database";

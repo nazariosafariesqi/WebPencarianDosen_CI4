@@ -7,7 +7,7 @@
 </div>
 <!-- /.container-fluid -->
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-8 ml-4">
         <div class="input-group">
             <input type="text" class="form-control bg-grey border-0 small" placeholder="Cari Nama Dosen" aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">

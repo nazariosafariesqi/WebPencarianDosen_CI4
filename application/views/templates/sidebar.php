@@ -27,7 +27,6 @@
 
     ?>
 
-
     <!-- Looping Menu -->
     <?php foreach ($menu as $m) : ?>
         <div class="sidebar-heading">

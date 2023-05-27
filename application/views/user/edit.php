@@ -7,7 +7,7 @@
 </div>
 <!-- /.container-fluid -->
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-8 ml-4">
         <?= form_open_multipart('user/edit'); ?>
         <div class="form-group row">
             <label for="email" class="col-sm-2 col-form-label">Email</label>
