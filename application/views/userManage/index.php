@@ -73,6 +73,13 @@
                         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
                     </div>
                     <div class="form-group">
+                        <label for="role_id">Role</label>
+                        <select class="form-control w-26" id="role_id" name="role_id">
+                            <option value="1">Administrator</option>
+                            <option value="2">Member</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
