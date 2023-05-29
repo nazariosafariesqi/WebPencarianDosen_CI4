@@ -1,42 +1,37 @@
-<!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
+
     <div class="row">
         <div class="col-lg">
-            <?= form_error('name', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('email', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('password', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('name-edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('email-edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('password1', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('password2', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+            <?= form_error('nama_pemilik', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+            <?= form_error('mac_address', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newUserModal">Add New User</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newPemilikModal">Add Pemilik</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Nama Pemilik</th>
+                        <th scope="col">Mac Address</th>
+                        <th scope="col">Jenis</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1 ?>
-                    <?php foreach ($user as $u) : ?>
+                    <?php foreach ($pemilik as $p) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
-                            <td><?= $u['name']; ?></td>
-                            <td><?= $u['email']; ?></td>
-                            <td><?= $u['role']; ?></td>
+                            <td><?= $p['nama_pemilik']; ?></td>
+                            <td><?= $p['mac_address']; ?></td>
+                            <td><?= $p['jenis']; ?></td>
                             <td>
-                                <a href="" class="badge badge-success" id="btn-edit" data-id="<?= $u['id']; ?>" data-name="<?= $u['name']; ?>" data-email="<?= $u['email']; ?>" data-toggle="modal" data-target="#editUserModal">Edit</a>
-                                <a href="" class="badge badge-danger" data-toggle="modal" data-target="#deleteUserModal"> Delete</a>
+                                <a href="" class="badge badge-success" id="edit-pemilik" data-id="<?= $p['id']; ?>" data-mac="<?= $p['mac_address']; ?>" data-jenis="<?= $p['jenis']; ?>" data-pemilik="<?= $p['nama_pemilik']; ?>" data-toggle="modal" data-target="#editPemilikModal">Edit</a>
+                                <a href="" class="badge badge-danger" data-toggle="modal" data-target="#deletePemilikModal"> Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -44,46 +39,37 @@
             </table>
         </div>
     </div>
-
 </div>
-<!-- /.container-fluid -->
 
-</div>
-<!-- End of Main Content -->
-
-<!-- Modal Add New User -->
-<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel" aria-hidden="true">
+<!-- Modal Add New Pemilik -->
+<div class="modal fade" id="newPemilikModal" tabindex="-1" role="dialog" aria-labelledby="newPemilikModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newUserModalLabel">Add New User</h5>
+                <h5 class="modal-title" id="newPemilikModalLabel">Add Pemilik Baru</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('UserManage/insert'); ?>" method="POST">
+            <form action="<?= base_url('Admin/insertPemilik'); ?>" method="POST">
                 <div class="modal-body">
-
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                        <label for="nama_pemilik">Nama Pemilik</label>
+                        <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <label for="mac_address">Mac Address</label>
+                        <input type="text" class="form-control" id="mac_address" name="mac_address" placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="role_id">Role</label>
-                        <select class="form-control w-26" id="role_id" name="role_id">
-                            <option value="1">Administrator</option>
-                            <option value="2">Member</option>
+                        <label for="jenis_id">Jenis</label>
+                        <select class="form-control w-26" id="jenis_id" name="jenis_id">
+                            <option value="1">Laptop</option>
+                            <option value="2">Handphone</option>
+                            <option value="3">PC</option>
+                            <option value="4">Lainnya</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="add" class="btn btn-primary">Add</button>
@@ -132,7 +118,7 @@
     </div>
 </div>
 
-<!-- Modal Delete User-->
+<!-- Modal Delete Pemilik-->
 <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
