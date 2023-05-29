@@ -49,6 +49,7 @@
 <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 <script src="<?= base_url('assets/'); ?>js/script.js"></script>
 <script src="<?= base_url('assets/'); ?>js/script2.js"></script>
+<script src="<?= base_url('assets/'); ?>css/pagination.css"></script>
 
 <script>
     $('.custom-file-input').on('change', function() {
