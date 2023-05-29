@@ -84,8 +84,9 @@ class UserManage extends CI_Controller
         $data['user'] = $this->db->get('user')->result_array();
 
         $this->form_validation->set_rules('name-edit', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email-edit', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
-            'is_unique' => 'This email has already been registered!'
+        $this->form_validation->set_rules('email-edit', 'Email', 'required|trim|valid_email|callback_check_email', [
+            'is_unique' => 'This email has already been registered!',
+            'check_email' => 'This email has already been registered!'
         ]);
         $this->form_validation->set_rules('password1', 'New Password', 'trim|min_length[3]|matches[password2]', [
             'matches' => 'Password dont match!',
@@ -129,6 +130,17 @@ class UserManage extends CI_Controller
             );
             redirect('userManage/index');
         }
+    }
+
+    public function check_email($email)
+    {
+        $user_id = $this->input->post('user_id');
+        $existingUser = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        if ($existingUser && $existingUser['id'] != $user_id) {
+            return FALSE; // email sudah terdaftar oleh pengguna lain
+        }
+        return TRUE; // email tersedia atau tidak diganti
     }
 
     public function delete($user_id)
