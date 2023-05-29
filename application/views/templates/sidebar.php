@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-fw fa-code "></i>
+            <i class="fas fa-fw fa-map-marked-alt"></i>
         </div>
         <div class="sidebar-brand-text mx-3"> WPD JTI Polinema </div>
     </a>

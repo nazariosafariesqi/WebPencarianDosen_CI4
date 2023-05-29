@@ -8,6 +8,12 @@
         <div class="col-lg">
             <?= form_error('nama_pemilik', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= form_error('mac_address', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+            <?= form_error('jenis', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+
+            <?= form_error('nama-pemilik', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+            <?= form_error('mac-address', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+            <?= form_error('jenis_id', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+
             <?= $this->session->flashdata('message'); ?>
 
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newPemilikModal">Add Pemilik</a>
@@ -81,37 +87,39 @@
 </div>
 
 <!-- Modal Edit / Update -->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="editPemilikModal" tabindex="-1" role="dialog" aria-labelledby="editPemilikModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Edit User Data</h5>
+                <h5 class="modal-title" id="editPemilikModalLabel">Edit User Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('UserManage/update'); ?>" method="POST">
+            <form action="<?= base_url('Admin/updatePemilik'); ?>" method="POST">
                 <div class="modal-body">
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name-edit" name="name-edit" placeholder="Edit name" id="user_id" data-id="<?= $u['name'] ?>;">
+                        <label for="nama-pemilik">Nama Pemilik</label>
+                        <input type="text" class="form-control" id="nama-pemilik" name="nama-pemilik" placeholder="Edit Nama Pemilik" id="user_id" data-id="<?= $p['nama_pemilik'] ?>;">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email-edit" name="email-edit" aria-describedby="emailHelp" placeholder="Edit email" id="user_id" data-id="<?= $u['email'] ?>;">
+                        <label for="mac-address">MAC Address</label>
+                        <input type="text" class="form-control" id="mac-address" name="mac-address" placeholder="Edit MAC Address" id="user_id" data-id="<?= $p['mac_address'] ?>;">
                     </div>
-                    <div class="password">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password1" name="password1" placeholder="New password">
-                    </div>
-                    <div class="password">
-                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Re-type password">
+                    <div class="form-group">
+                        <label for="jenis_id">Jenis</label>
+                        <select class="form-control w-26" id="jenis_id" name="jenis_id">
+                            <option value="1">Laptop</option>
+                            <option value="2">Handphone</option>
+                            <option value="3">PC</option>
+                            <option value="4">Lainnya</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="update" class="btn btn-primary">Update</button>
+                    <button type="submit" name="update_pemilik" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -119,21 +127,21 @@
 </div>
 
 <!-- Modal Delete Pemilik-->
-<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="deletePemilikModal" tabindex="-1" role="dialog" aria-labelledby="deletePemilikModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                <h5 class="modal-title" id="deletePemilikModalLabel">Delete Pemilik</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this user?</p>
+                <p>Are you sure you want to delete Pemilik?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="<?= base_url('UserManage/delete/' . $u['id']); ?>">Delete</a>
+                <a class="btn btn-danger" href="<?= base_url('Admin/deletePemilik/' . $p['id']); ?>">Delete</a>
             </div>
         </div>
     </div>
