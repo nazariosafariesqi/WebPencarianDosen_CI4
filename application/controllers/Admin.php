@@ -7,11 +7,11 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->library('pagination');
     }
 
     public function index()
     {
-        $this->load->library('pagination');
         $data['title'] = 'Dashboard Leases Admin';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
@@ -20,7 +20,7 @@ class Admin extends CI_Controller
         $config['total_rows'] = $this->db->count_all('leases'); // Jumlah total data yang akan dipaginasi
         $config['per_page'] = 7; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
-        $config['num_links'] = 3; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
 
         //style
@@ -49,15 +49,78 @@ class Admin extends CI_Controller
         $config['num_tag_open'] = '<li class="page-item">';
         $config['num_tag_close'] = '</li>';
 
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        $limit = $config['per_page'];
+        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
+        $this->db->limit($limit, $offset);
+        $data['leases'] = $this->db->get('leases')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar2', $data);
+        $this->load->view('admin/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function Search()
+    {
+        $data['title'] = 'Dashboard Leases Admin';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $config['base_url'] = base_url('admin/index'); // URL base halaman
+        $config['total_rows'] = $this->db->count_all('leases'); // Jumlah total data yang akan dipaginasi
+        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
+
+        //style
+        $config['full_tag_open'] = '<nav><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
 
         $config['attributes'] = array('class' => 'page-link');
 
         $this->pagination->initialize($config);
 
-
         $limit = $config['per_page'];
-        $offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
         $this->db->limit($limit, $offset);
+
+        // Mengambil keyword dari inputan form
+        $keyword = $this->input->post('keyword');
+
+        // Query pencarian data berdasarkan keyword
+        $this->db->like('ip_address', $keyword);
+        $this->db->or_like('mac_address', $keyword);
+        $this->db->or_like('active_host_name', $keyword);
+        $this->db->or_like('time_expires', $keyword);
+        $this->db->or_like('last_seen', $keyword);
+        $this->db->or_like('waktu_ambil', $keyword);
         $data['leases'] = $this->db->get('leases')->result_array();
 
         $this->load->view('templates/header', $data);

@@ -8,18 +8,16 @@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
             <!-- Sidebar Toggle (Topbar) -->
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-            </button>
-            <input type="text" class="form-control bg-grey border-9 small" placeholder="Search ..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append ml-1">
-                <button class="btn btn-info" type="submit">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
+            <form action="<?= base_url('Admin/Search'); ?>" method="POST" class="form-inline">
+                <div class="form-group">
+                    <input type="text" name="keyword" autofocus autocomplete="off" class="form-control bg-grey border small" placeholder="Search Keyword" aria-label="Search" aria-describedby="basic-addon2">
+                </div>
+                <div class="input-group-append">
+                    <input class="btn btn-info ml-2" type="submit" name="search" value="Search"></input>
+                </div>
+            </form>
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-
 
                 <div class="topbar-divider d-none d-sm-block"></div>
 
