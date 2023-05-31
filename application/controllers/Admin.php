@@ -56,6 +56,7 @@ class Admin extends CI_Controller
         $limit = $config['per_page'];
         $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
         $this->db->limit($limit, $offset);
+        $this->db->order_by('waktu_ambil', 'desc');
         $data['leases'] = $this->db->get('leases')->result_array();
 
         $this->load->view('templates/header', $data);
@@ -133,6 +134,7 @@ class Admin extends CI_Controller
             ->or_like('last_seen', $keyword)
             ->or_like('waktu_ambil', $keyword)
             ->group_end();
+        $this->db->order_by('waktu_ambil', 'desc');
 
         $data['leases'] = $this->db->get('leases')->result_array();
         $data['pagination'] = $this->pagination->create_links();
@@ -166,7 +168,7 @@ class Admin extends CI_Controller
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar2', $data);
+        $this->load->view('templates/topbar', $data);
         $this->load->view('admin/Pemilik', $data);
         $this->load->view('templates/footer');
     }
@@ -332,20 +334,8 @@ class Admin extends CI_Controller
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
+        $this->load->view('templates/topbar2', $data);
         $this->load->view('admin/editRuangan', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function leases()
-    {
-        $data['title'] = 'Connect to Mikrotik';
-        $data['user'] = $this->db->get_where('user', ['email' =>
-        $this->session->userdata('email')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/leases', $data);
         $this->load->view('templates/footer');
     }
 }

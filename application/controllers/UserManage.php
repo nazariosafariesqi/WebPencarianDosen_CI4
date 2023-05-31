@@ -12,9 +12,10 @@ class UserManage extends CI_Controller
     public function index()
     {
         $data['title'] = 'User Management';
-        $data['user'] = $this->db->get_where('user', ['email' =>
-        $this->session->userdata('email')])->row_array();
-        $data['user'] = $this->db->get('user')->result_array();
+
+        $email = $this->session->userdata('email');
+        $data['user'] = $this->db->get_where('user', ['email' => $email])->row_array();
+        $data['users'] = $this->db->get('user')->result_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -41,7 +42,7 @@ class UserManage extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar2', $data);
+            $this->load->view('templates/topbar', $data);
             $this->load->view('userManage/index', $data);
             $this->load->view('templates/footer');
         } else {
@@ -97,7 +98,7 @@ class UserManage extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar2', $data);
+            $this->load->view('templates/topbar', $data);
             $this->load->view('userManage/index', $data);
             $this->load->view('templates/footer');
         } else {

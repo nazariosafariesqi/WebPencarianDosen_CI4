@@ -47,6 +47,8 @@
     </div>
 </div>
 
+</div>
+
 <!-- Modal Add New Pemilik -->
 <div class="modal fade" id="newPemilikModal" tabindex="-1" role="dialog" aria-labelledby="newPemilikModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

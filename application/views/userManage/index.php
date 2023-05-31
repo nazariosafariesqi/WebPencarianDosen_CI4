@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                     <?php $i = 1 ?>
-                    <?php foreach ($user as $u) : ?>
+                    <?php foreach ($users as $u) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
                             <td><?= $u['name']; ?></td>
