@@ -69,9 +69,22 @@ class Admin extends CI_Controller
     {
         $data['title'] = 'Dashboard Leases Admin';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $keyword = $this->input->get('keyword');
 
-        $config['base_url'] = base_url('admin/index'); // URL base halaman
-        $config['total_rows'] = $this->db->count_all('leases'); // Jumlah total data yang akan dipaginasi
+        if ($keyword) {
+            $this->session->set_userdata('search_keyword', $keyword);
+        } else {
+            $keyword = $this->session->userdata('search_keyword');
+        }
+
+        $config['base_url'] = base_url('admin/search'); // URL base halaman
+        $config['total_rows'] = $this->db->like('ip_address', $keyword)
+            ->or_like('mac_address', $keyword)
+            ->or_like('active_host_name', $keyword)
+            ->or_like('time_expires', $keyword)
+            ->or_like('last_seen', $keyword)
+            ->or_like('waktu_ambil', $keyword)
+            ->count_all_results('leases'); // Jumlah total data yang akan dipaginasi
         $config['per_page'] = 7; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
@@ -108,20 +121,22 @@ class Admin extends CI_Controller
         $this->pagination->initialize($config);
 
         $limit = $config['per_page'];
-        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
+        $page = $this->uri->segment(3) ? $this->uri->segment(3) : 1;
+        $offset = ($page - 1) * $limit;
+
         $this->db->limit($limit, $offset);
+        $this->db->group_start()
+            ->like('ip_address', $keyword)
+            ->or_like('mac_address', $keyword)
+            ->or_like('active_host_name', $keyword)
+            ->or_like('time_expires', $keyword)
+            ->or_like('last_seen', $keyword)
+            ->or_like('waktu_ambil', $keyword)
+            ->group_end();
 
-        // Mengambil keyword dari inputan form
-        $keyword = $this->input->post('keyword');
-
-        // Query pencarian data berdasarkan keyword
-        $this->db->like('ip_address', $keyword);
-        $this->db->or_like('mac_address', $keyword);
-        $this->db->or_like('active_host_name', $keyword);
-        $this->db->or_like('time_expires', $keyword);
-        $this->db->or_like('last_seen', $keyword);
-        $this->db->or_like('waktu_ambil', $keyword);
         $data['leases'] = $this->db->get('leases')->result_array();
+        $data['pagination'] = $this->pagination->create_links();
+        $data['keyword'] = $keyword;
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
