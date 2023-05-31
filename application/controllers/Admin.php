@@ -58,6 +58,7 @@ class Admin extends CI_Controller
         $this->db->limit($limit, $offset);
         $this->db->order_by('waktu_ambil', 'desc');
         $data['leases'] = $this->db->get('leases')->result_array();
+        $data['offset'] = $offset;
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -332,6 +333,7 @@ class Admin extends CI_Controller
         $data['title'] = 'Edit Ruangan';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+        $data['ruangan'] = $this->db->get('ruangan')->result_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);

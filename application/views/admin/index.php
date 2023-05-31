@@ -20,11 +20,13 @@
                         <th scope="col">Waktu Ambil</th>
                     </tr>
                 </thead>
+
+
                 <tbody>
-                    <?php $i = 1 ?>
+                    <?php $i = $offset + 1; ?>
                     <?php foreach ($leases as $l) : ?>
                         <tr>
-                            <th scope="row"><?= $i; ?></th>
+                            <th scope="row"><?= $i++; ?></th>
                             <td><?= $l['ip_address']; ?></td>
                             <td><?= $l['mac_address']; ?></td>
                             <td><?= $l['active_host_name']; ?></td>
@@ -32,7 +34,6 @@
                             <td><?= $l['last_seen']; ?></td>
                             <td><?= $l['waktu_ambil']; ?></td>
                         </tr>
-                        <?php $i++ ?>
                     <?php endforeach; ?>
 
                 </tbody>
