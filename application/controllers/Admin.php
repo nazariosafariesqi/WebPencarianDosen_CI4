@@ -239,7 +239,6 @@ class Admin extends CI_Controller
             'Mac Address',
             'required|trim|callback_check_mac_address',
             [
-                'is_unique' => 'Mac Address is already registered!',
                 'check_mac_address' => 'Mac Address is already registered!'
             ]
         );
@@ -339,5 +338,149 @@ class Admin extends CI_Controller
         $this->load->view('templates/topbar2', $data);
         $this->load->view('admin/editRuangan', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function insertRuangan()
+    {
+        $data['title'] = 'Add Pemilik';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['ruangan'] = $this->db->get('ruangan')->result_array();
+
+        $this->form_validation->set_rules('no_ruang', 'Nomor Ruang', 'required|trim|is_unique[ruangan.no_ruang]', [
+            'is_unique' => 'Nomor Ruang is Already Registered!'
+        ]);
+        $this->form_validation->set_rules('nama_ruang', 'Nama Ruang', 'required|trim|min_length[3]', [
+            'min_length' => 'Nama Ruang too short!'
+        ]);
+        $this->form_validation->set_rules('gateway', 'Gateway', 'required|trim|min_length[7]|is_unique[ruangan.gateway]', [
+            'min_length' => 'Format Gateway tidak sesuai',
+            'is_unique' => 'Gateway is Already Registered!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar2', $data);
+            $this->load->view('Admin/editRuangan', $data);
+            $this->load->view('templates/footer');
+        } else {
+
+            $this->db->insert(
+                'ruangan',
+                [
+                    'no_ruang' => $this->input->post('no_ruang'),
+                    'nama_ruang' => $this->input->post('nama_ruang'),
+                    'gateway' => $this->input->post('gateway'),
+                    'lantai' => $this->input->post('lantai')
+                ]
+            );
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">
+                    Ruangan Baru Added
+                    </div>'
+            );
+            redirect('Admin/Ruangan');
+        }
+    }
+
+    public function updateRuangan()
+    {
+        $data['title'] = 'Edit Ruangan';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['ruangan'] = $this->db->get('ruangan')->result_array();
+
+        $this->form_validation->set_rules('no-ruang', 'Nomor Ruang', 'required|trim|callback_check_no_ruang', [
+            'check_no_ruang' => 'Nomor Ruang is already registered!'
+        ]);
+        $this->form_validation->set_rules('nama-ruang', 'Nama Ruang', 'required|trim|min_length[3]', [
+            'min_length' => 'Nama Ruang too short!'
+        ]);
+        $this->form_validation->set_rules('gateway-edit', 'Gateway', 'required|trim|min_length[7]|callback_check_gateway', [
+            'min_length' => 'Format Gateway tidak sesuai',
+            'check_gateway' => 'Gateway is already registered!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar2', $data);
+            $this->load->view('Admin/editRuangan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $user_id = $this->input->post('user_id');
+            $no_ruang = $this->input->post('no-ruang');
+            $nama_ruang = $this->input->post('nama-ruang');
+            $gateway = $this->input->post('gateway-edit');
+            $lantai = $this->input->post('lantai');
+
+            $data = [
+                'nama_ruang' => $nama_ruang,
+                'no_ruang' => $no_ruang,
+                'gateway' => $gateway,
+                'lantai' => $lantai
+            ];
+
+            if (!empty($nama_ruang)) {
+                $data['nama_ruang'] = $nama_ruang;
+            }
+
+            if (!empty($no_ruang)) {
+                $data['no_ruang'] = $no_ruang;
+            }
+
+            if (!empty($gateway)) {
+                $data['gateway'] = $gateway;
+            }
+
+            $this->db->where('id', $user_id);
+            $this->db->update('ruangan', $data);
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">
+                    Data Ruangan Updated
+                </div>'
+            );
+            redirect('Admin/Ruangan');
+        }
+    }
+    public function check_no_ruang($no_ruang)
+    {
+        $user_id = $this->input->post('user_id');
+        $existingUser = $this->db->get_where('ruangan', ['no_ruang' => $no_ruang])->row_array();
+
+        if ($existingUser && $existingUser['id'] != $user_id) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    public function check_gateway($gateway)
+    {
+        $user_id = $this->input->post('user_id');
+        $existingUser = $this->db->get_where('ruangan', ['gateway' => $gateway])->row_array();
+
+        if ($existingUser && $existingUser['id'] != $user_id) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    public function deleteRuangan($user_id)
+    {
+        $this->db->where('id', $user_id);
+        $this->db->delete('ruangan');
+
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Ruangan Deleted
+        </div>'
+        );
+        redirect('Admin/Ruangan');
     }
 }
