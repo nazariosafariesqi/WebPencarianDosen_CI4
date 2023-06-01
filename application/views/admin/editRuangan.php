@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1 ?>
+                    <?php $i = $offset + 1; ?>
                     <?php foreach ($ruangan as $r) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
@@ -44,6 +44,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= $this->pagination->create_links(); ?>
         </div>
     </div>
 </div>
