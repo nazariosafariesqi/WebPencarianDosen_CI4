@@ -50,6 +50,7 @@
 <script src="<?= base_url('assets/'); ?>js/script.js"></script>
 <script src="<?= base_url('assets/'); ?>js/script2.js"></script>
 <script src="<?= base_url('assets/'); ?>js/script3.js"></script>
+<script src="<?= base_url('assets/'); ?>js/scriptdelete.js"></script>
 <script src="<?= base_url('assets/'); ?>css/pagination.css"></script>
 
 <script>

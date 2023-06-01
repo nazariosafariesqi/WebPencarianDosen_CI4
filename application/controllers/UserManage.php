@@ -29,7 +29,7 @@ class UserManage extends CI_Controller
         $data['title'] = 'User Management';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-        $data['user'] = $this->db->get('user')->result_array();
+        $data['users'] = $this->db->get('user')->result_array();
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
@@ -82,7 +82,7 @@ class UserManage extends CI_Controller
         $data['title'] = 'User Management';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-        $data['user'] = $this->db->get('user')->result_array();
+        $data['users'] = $this->db->get('user')->result_array();
 
         $this->form_validation->set_rules('name-edit', 'Name', 'required|trim');
         $this->form_validation->set_rules('email-edit', 'Email', 'required|trim|valid_email|callback_check_email', [
@@ -120,8 +120,8 @@ class UserManage extends CI_Controller
                 $data['password'] = password_hash($password, PASSWORD_DEFAULT);
             }
 
-            $this->db->where('id', $user_id);
-            $this->db->update('user', $data);
+            $this->db->where('id', $user_id)
+                ->update('user', $data);
 
             $this->session->set_flashdata(
                 'message',
@@ -144,10 +144,17 @@ class UserManage extends CI_Controller
         return TRUE; // email tersedia atau tidak diganti
     }
 
-    public function delete($user_id)
+    public function delete()
     {
-        $this->db->where('id', $user_id);
-        $this->db->delete('user');
+        $data['title'] = 'User Management';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['users'] = $this->db->get('user')->result_array();
+
+        $user_id = $this->input->post('user_id');
+
+        $this->db->where('id', $user_id)
+            ->delete('user');
 
         $this->session->set_flashdata(
             'message',
@@ -155,6 +162,7 @@ class UserManage extends CI_Controller
             User Data Deleted
         </div>'
         );
+
         redirect('userManage/index');
     }
 }

@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1 ?>
+                    <?php $i = $offset + 1 ?>
                     <?php foreach ($pemilik as $p) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
@@ -37,12 +37,13 @@
                             <td><?= $p['jenis']; ?></td>
                             <td>
                                 <a href="" class="badge badge-success" id="edit-pemilik" data-id="<?= $p['id']; ?>" data-mac="<?= $p['mac_address']; ?>" data-jenis="<?= $p['jenis']; ?>" data-pemilik="<?= $p['nama_pemilik']; ?>" data-toggle="modal" data-target="#editPemilikModal">Edit</a>
-                                <a href="" class="badge badge-danger" data-toggle="modal" data-target="#deletePemilikModal"> Delete</a>
+                                <a href="" class="badge badge-danger" data-toggle="modal" id="btn-delete" data-delete="<?= $p['id']; ?>" data-target="#deletePemilikModal"> Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= $this->pagination->create_links(); ?>
         </div>
     </div>
 </div>
@@ -138,13 +139,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete Pemilik?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="<?= base_url('Admin/deletePemilik/' . $p['id']); ?>">Delete</a>
-            </div>
+            <form action="<?= base_url('Admin/deletePemilik'); ?>" method="POST">
+                <div class="modal-body">
+                    <p>Are you sure you want to delete Pemilik ?</p>
+                    <input type="hidden" name="user_id" id="user_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" type="submit" name="delete">Delete</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

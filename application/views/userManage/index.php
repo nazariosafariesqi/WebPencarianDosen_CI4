@@ -35,8 +35,8 @@
                             <td><?= $u['email']; ?></td>
                             <td><?= $u['role']; ?></td>
                             <td>
-                                <a href="" class="badge badge-success" id="btn-edit" data-id="<?= $u['id']; ?>" data-name="<?= $u['name']; ?>" data-email="<?= $u['email']; ?>" data-toggle="modal" data-target="#editUserModal">Edit</a>
-                                <a href="" class="badge badge-danger" data-toggle="modal" data-target="#deleteUserModal"> Delete</a>
+                                <a href="#" class="badge badge-success" id="btn-edit" data-id="<?= $u['id']; ?>" data-name="<?= $u['name']; ?>" data-email="<?= $u['email']; ?>" data-toggle="modal" data-target="#editUserModal">Edit</a>
+                                <a href="#" class="badge badge-danger" data-toggle="modal" id="btn-delete" data-delete="<?= $u['id']; ?>" data-target="#deleteUserModal"> Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -133,22 +133,21 @@
 </div>
 
 <!-- Modal Delete User-->
-<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+<div class="modal" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete this user?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="<?= base_url('UserManage/delete/' . $u['id']); ?>">Delete</a>
-            </div>
+            <form action="<?= base_url('UserManage/delete'); ?>" method="POST">
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this user?</p>
+                    <input type="text" name="user_id" id="user_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" name="delete" type="submit" name="delete">Delete</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+</div>
 </div>

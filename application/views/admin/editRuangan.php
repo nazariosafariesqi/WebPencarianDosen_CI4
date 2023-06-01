@@ -38,7 +38,7 @@
                             <td><?= $r['lantai']; ?></td>
                             <td>
                                 <a href="" class="badge badge-success" id="edit-ruangan" data-id="<?= $r['id']; ?>" data-no="<?= $r['no_ruang']; ?>" data-ruang="<?= $r['nama_ruang']; ?>" data-gateway="<?= $r['gateway']; ?>" data-lantai="<?= $r['lantai']; ?>" data-toggle="modal" data-target="#editRuanganModal">Edit</a>
-                                <a href="" class="badge badge-danger" data-toggle="modal" data-target="#deleteRuanganModal"> Delete</a>
+                                <a href="" class="badge badge-danger" data-toggle="modal" id="btn-delete" data-delete="<?= $r['id']; ?>" data-target="#deleteRuanganModal"> Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -148,13 +148,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete Ruangan ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="<?= base_url('Admin/deleteRuangan/' . $r['id']); ?>">Delete</a>
-            </div>
+            <form action="<?= base_url('Admin/deleteRuangan'); ?>" method="POST">
+                <div class="modal-body">
+                    <p>Are you sure you want to delete Ruangan ?</p>
+                    <input type="hidden" name="user_id" id="user_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" type="submit" name="delete">Delete</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
