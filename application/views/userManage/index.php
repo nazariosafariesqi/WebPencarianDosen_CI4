@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1 ?>
+                    <?php $i = $offset + 1 ?>
                     <?php foreach ($users as $u) : ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
@@ -42,12 +42,10 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= $this->pagination->create_links(); ?>
         </div>
     </div>
-
 </div>
-<!-- /.container-fluid -->
-
 </div>
 <!-- End of Main Content -->
 
@@ -148,6 +146,4 @@
             </form>
         </div>
     </div>
-</div>
-</div>
 </div>

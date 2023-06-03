@@ -7,6 +7,7 @@ class UserManage extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->library('pagination');
     }
 
     public function index()
@@ -15,11 +16,131 @@ class UserManage extends CI_Controller
 
         $email = $this->session->userdata('email');
         $data['user'] = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        $config['base_url'] = base_url('UserManage/index'); // URL base halaman
+        $config['total_rows'] = $this->db->count_all('user'); // Jumlah total data yang akan dipaginasi
+        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
+
+        //style
+        $config['full_tag_open'] = '<nav><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        $limit = $config['per_page'];
+        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
+        $this->db->limit($limit, $offset);
+        $this->db->order_by('name', 'asc');
+
+        $data['offset'] = $offset;
         $data['users'] = $this->db->get('user')->result_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar2', $data);
+        $this->load->view('templates/topbarUserManage', $data);
+        $this->load->view('userManage/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function SearchUser()
+    {
+        $data['title'] = 'User Management';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $keyword = $this->input->get('keyword');
+
+        if ($keyword) {
+            $this->session->set_userdata('search_keyword', $keyword);
+        } else {
+            $keyword = $this->session->userdata('search_keyword');
+        }
+
+        $config['base_url'] = base_url('Admin/SearchUser'); // URL base halaman
+        $config['total_rows'] = $this->db->like('name', $keyword)
+            ->or_like('email', $keyword)
+            ->or_like('role', $keyword)
+            ->count_all_results('user'); // Jumlah total data yang akan dipaginasi
+        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
+
+        //style
+        $config['full_tag_open'] = '<nav><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        $limit = $config['per_page'];
+        $page = $this->uri->segment(3) ? $this->uri->segment(3) : 1;
+        $offset = ($page - 1) * $limit;
+
+        $this->db->limit($limit, $offset);
+        $this->db->group_start()
+            ->like('name', $keyword)
+            ->or_like('email', $keyword)
+            ->or_like('role', $keyword)
+            ->group_end();
+        $this->db->order_by('name', 'asc');
+
+        $data['users'] = $this->db->get('user')->result_array();
+        $data['pagination'] = $this->pagination->create_links();
+        $data['keyword'] = $keyword;
+        $data['offset'] = $offset;
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbarUserManage', $data);
         $this->load->view('userManage/index', $data);
         $this->load->view('templates/footer');
     }
@@ -42,7 +163,7 @@ class UserManage extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
+            $this->load->view('templates/topbarUserManage', $data);
             $this->load->view('userManage/index', $data);
             $this->load->view('templates/footer');
         } else {
@@ -98,7 +219,7 @@ class UserManage extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
+            $this->load->view('templates/topbarUserManage', $data);
             $this->load->view('userManage/index', $data);
             $this->load->view('templates/footer');
         } else {

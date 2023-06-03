@@ -8,7 +8,7 @@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
             <!-- Sidebar Toggle (Topbar) -->
-            <form action="<?= base_url('Admin/Search'); ?>" method="GET" class="form-inline">
+            <form action="<?= base_url('Admin/SearchPemilik'); ?>" method="GET" class="form-inline">
                 <div class="form-group">
                     <input type="text" value="<?= isset($keyword) ? $keyword : '' ?>" name="keyword" autofocus autocomplete="off" class="form-control bg-grey border small" placeholder="Search Keyword" aria-label="Search" aria-describedby="basic-addon2">
                 </div>
