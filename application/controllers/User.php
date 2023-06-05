@@ -53,11 +53,11 @@ class User extends CI_Controller
 
             // cek jika ada gambar yang akan di upload
             $upload_image = $_FILES['image']['name'];
+
             if ($upload_image) {
                 $config['allowed_type'] = 'gif|jpg|png';
-                $config['max_size'] = '5096';
+                $config['max_size'] = '4096';
                 $config['upload_path'] = './assets/img/profile/';
-
                 $this->load->library('upload', $config);
 
                 if ($this->upload->do_upload('image')) {
@@ -69,6 +69,7 @@ class User extends CI_Controller
 
                     $new_image = $this->upload->data('file_name');
                     $this->db->set('image', $new_image);
+                    $data['user']['image'] = $new_image;
                 } else {
                     echo $this->upload->display_errors();
                 }

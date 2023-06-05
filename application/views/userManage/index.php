@@ -137,7 +137,7 @@
             <form action="<?= base_url('UserManage/delete'); ?>" method="POST">
                 <div class="modal-body">
                     <p>Are you sure you want to delete this user?</p>
-                    <input type="text" name="user_id" id="user_id">
+                    <input type="hidden" name="user_id" id="user_id">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

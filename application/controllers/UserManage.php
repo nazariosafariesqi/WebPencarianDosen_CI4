@@ -152,6 +152,47 @@ class UserManage extends CI_Controller
         $this->session->userdata('email')])->row_array();
         $data['users'] = $this->db->get('user')->result_array();
 
+        $config['base_url'] = base_url('UserManage/index'); // URL base halaman
+        $config['total_rows'] = $this->db->count_all('user'); // Jumlah total data yang akan dipaginasi
+        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
+
+        //style
+        $config['full_tag_open'] = '<nav><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        $limit = $config['per_page'];
+        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
+        $this->db->limit($limit, $offset);
+
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
             'is_unique' => 'This email has already been registered!'
@@ -159,6 +200,8 @@ class UserManage extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]', [
             'min_length' => 'Password too short!'
         ]);
+
+        $data['offset'] = $offset;
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
@@ -216,6 +259,8 @@ class UserManage extends CI_Controller
         ]);
         $this->form_validation->set_rules('password2', 'Re-type Password', 'trim|matches[password1]');
 
+        $data['offset'] = $offset;
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -271,6 +316,7 @@ class UserManage extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['users'] = $this->db->get('user')->result_array();
+        $data['offset'] = $offset;
 
         $user_id = $this->input->post('user_id');
 

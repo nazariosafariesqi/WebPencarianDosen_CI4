@@ -22,12 +22,12 @@
             }
 
             $API = new RouterOSAPI();
-            $routerIPs = array('192.168.88.1'); // Daftar IP router
+            $routerIPs = array('192.168.73.1', '192.168.60.1', '192.168.56.1'); // Daftar IP router
             //, '192.168.73.1','192.168.60.1', '192.168.56.1'
 
             foreach ($routerIPs as $routerIP) {
                 if ($API->connect($routerIP, 'nazario', 'n4z4r10')) {
-                    echo "Koneksi ke Mikrotik ($routerIP) sukses" . "<br>";
+                    echo "<br>Koneksi ke Mikrotik ($routerIP) sukses" . "<br>";
 
                     // Mengambil IP address
                     $API->write('/ip/address/print');
@@ -72,12 +72,11 @@
 
                         $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen)
                                 VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
-
-                        if ($conn->query($sql) === TRUE) {
-                            echo "<br>Data berhasil dimasukkan ke dalam database";
-                        } else {
-                            echo "<br>Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
-                        }
+                    }
+                    if ($conn->query($sql) === TRUE) {
+                        echo "Data berhasil dimasukkan ke dalam database ";
+                    } else {
+                        echo "Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
                     }
                     $API->disconnect();
                 } else {

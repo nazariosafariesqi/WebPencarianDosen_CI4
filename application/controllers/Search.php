@@ -16,7 +16,7 @@ class Search extends CI_Controller
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
+        $this->load->view('templates/topbar2', $data);
         $this->load->view('user/search', $data);
         $this->load->view('templates/footer');
     }
