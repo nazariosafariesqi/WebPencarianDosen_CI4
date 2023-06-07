@@ -3,16 +3,11 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-
     <div class="row">
         <div class="col-lg">
             <?= form_error('nama_ruang', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= form_error('no_ruang', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= form_error('gateway', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-
-            <?= form_error('nama-ruang', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('no-ruang', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= form_error('gateway-edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
 
             <?= $this->session->flashdata('message'); ?>
 
@@ -25,6 +20,7 @@
                         <th scope="col">Nama Ruang</th>
                         <th scope="col">Gateway</th>
                         <th scope="col">Lantai</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>

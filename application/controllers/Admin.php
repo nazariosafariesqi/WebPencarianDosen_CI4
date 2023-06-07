@@ -155,12 +155,219 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
+        $config['base_url'] = base_url('admin/Router'); // URL base halaman
+        $config['total_rows'] = $this->db->count_all('router'); // Jumlah total data yang akan dipaginasi
+        $config['per_page'] = 10; // Jumlah data per halaman
+        $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
+
+        //style
+        $config['full_tag_open'] = '<nav><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        $limit = $config['per_page'];
+        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
+        $this->db->limit($limit, $offset);
+        $this->db->order_by('nama_router', 'asc');
+
+        $data['router'] = $this->db->get('router')->result_array();
+        $data['offset'] = $offset;
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar2', $data);
+        $this->load->view('templates/topbarRouter', $data);
         $this->load->view('admin/editRouter', $data);
         $this->load->view('templates/footer');
     }
+
+    public function insertRouter()
+    {
+        $data['title'] = 'Edit Router';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $config['base_url'] = base_url('admin/Router'); // URL base halaman
+        $config['total_rows'] = $this->db->count_all('router'); // Jumlah total data yang akan dipaginasi
+        $config['per_page'] = 10; // Jumlah data per halaman
+        $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
+        $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
+        $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
+
+        //style
+        $config['full_tag_open'] = '<nav><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        $limit = $config['per_page'];
+        $offset = ($this->uri->segment(3)) ? ($this->uri->segment(3) - 1) * $config['per_page'] : 0;
+        $this->db->limit($limit, $offset);
+
+        $data['router'] = $this->db->get('router')->result_array();
+        $data['offset'] = $offset;
+
+        $this->form_validation->set_rules('ip_address', 'IP Address', 'required|trim|is_unique[router.ip_address]|min_length[7]', [
+            'min_length' => 'Format IP Address tidak sesuai',
+            'is_unique' => 'IP Address is Already Registered!'
+        ]);
+        $this->form_validation->set_rules('nama_router', 'Nama Router', 'required|trim|min_length[3]', [
+            'min_length' => 'Nama Router too short!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbarRouter', $data);
+            $this->load->view('Admin/editRouter', $data);
+            $this->load->view('templates/footer');
+        } else {
+
+            $this->db->insert(
+                'router',
+                [
+                    'ip_address' => $this->input->post('ip_address'),
+                    'nama_router' => $this->input->post('nama_router')
+                ]
+            );
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">
+                    Router Baru Added
+                    </div>'
+            );
+            redirect('Admin/Router');
+        }
+    }
+
+    public function updateRouter()
+    {
+        $data['title'] = 'Edit Router';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['router'] = $this->db->get('router')->result_array();
+
+        $this->form_validation->set_rules('ip-edit', 'IP Address', 'required|trim|callback_check_ip|min_length[7]', [
+            'min_length' => 'Format IP Address tidak sesuai',
+            'check_ip' => 'IP Address is Already Registered!'
+        ]);
+        $this->form_validation->set_rules('nama-router', 'Nama Router', 'required|trim|min_length[3]', [
+            'min_length' => 'Nama Router too short!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbarRouter', $data);
+            $this->load->view('Admin/editRouter', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $user_id = $this->input->post('user_id');
+            $ip_address = $this->input->post('ip-edit');
+            $nama_router = $this->input->post('nama-router');
+
+            $data = [
+                'nama_router' => $nama_router,
+                'ip_address' => $ip_address
+            ];
+
+            if (!empty($nama_router)) {
+                $data['nama_router'] = $nama_router;
+            }
+
+            if (!empty($ip_address)) {
+                $data['ip_address'] = $ip_address;
+            }
+
+            $this->db->where('id', $user_id);
+            $this->db->update('router', $data);
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">
+                    Data Router Updated
+                </div>'
+            );
+            redirect('Admin/Router');
+        }
+    }
+    public function check_ip($ip_address)
+    {
+        $user_id = $this->input->post('user_id');
+        $existingUser = $this->db->get_where('router', ['ip_address' => $ip_address])->row_array();
+
+        if ($existingUser && $existingUser['id'] != $user_id) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    public function deleteRouter()
+    {
+        $user_id = $this->input->post('user_id');
+        $this->db->where('id', $user_id);
+        $this->db->delete('router');
+
+        $this->session->set_flashdata(
+            'message',
+            '<div class="alert alert-success" role="alert">
+            Router Deleted
+        </div>'
+        );
+        redirect('Admin/Router');
+    }
+
 
     public function Ruangan()
     {
@@ -438,10 +645,6 @@ class Admin extends CI_Controller
 
             $this->db->where('id', $user_id);
             $this->db->update('ruangan', $data);
-
-            $this->db->set('no_ruang', $no_ruang);
-            $this->db->where('gateway', $gateway);
-            $this->db->update('IP2');
 
             $this->session->set_flashdata(
                 'message',
