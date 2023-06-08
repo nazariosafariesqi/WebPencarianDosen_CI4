@@ -6,10 +6,10 @@
 
     <div class="row">
         <div class="col-lg">
-            <a href="<?= base_url('admin/leases') ?>" id="connectButton" type="button" class="btn btn-success mb-3">Connect Mikrotik</a>
+            <a href="<?= base_url('admin/leases') ?>" id="connectMikrotikBtn" type="button" class="btn btn-success mb-3">Connect Mikrotik</a>
             <script>
-                document.getElementById('connectButton').addEventListener('click', function() {
-                    this.innerHTML = 'Sedang terhubung ...';
+                document.getElementById('connectMikrotikBtn').addEventListener('click', function() {
+                    this.innerHTML = 'Sedang terhubung...';
                     this.disabled = true;
                 });
             </script>
@@ -25,8 +25,6 @@
                         <th scope="col">Waktu Ambil</th>
                     </tr>
                 </thead>
-
-
                 <tbody>
                     <?php $i = $offset + 1; ?>
                     <?php foreach ($leases as $l) : ?>

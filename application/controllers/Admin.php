@@ -64,7 +64,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('admin/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function Search()
@@ -146,7 +146,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('admin/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function Router()
@@ -204,7 +204,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRouter', $data);
         $this->load->view('admin/editRouter', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchRouter()
@@ -278,7 +278,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRouter', $data);
         $this->load->view('Admin/editRouter', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
 
@@ -345,7 +345,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRouter', $data);
             $this->load->view('Admin/editRouter', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
 
             $this->db->insert(
@@ -386,7 +386,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRouter', $data);
             $this->load->view('Admin/editRouter', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
             $ip_address = $this->input->post('ip-edit');
@@ -499,7 +499,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRuangan', $data);
         $this->load->view('admin/editRuangan', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchRuangan()
@@ -577,7 +577,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRuangan', $data);
         $this->load->view('admin/editRuangan', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function insertRuangan()
@@ -645,7 +645,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRuangan', $data);
             $this->load->view('Admin/editRuangan', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
 
             $this->db->insert(
@@ -691,7 +691,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRuangan', $data);
             $this->load->view('Admin/editRuangan', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
             $no_ruang = $this->input->post('no-ruang');
@@ -822,7 +822,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarPemilik', $data);
         $this->load->view('admin/Pemilik', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchPemilik()
@@ -897,7 +897,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarPemilik', $data);
         $this->load->view('admin/Pemilik', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function insertPemilik()
@@ -962,7 +962,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarPemilik', $data);
             $this->load->view('admin/Pemilik', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $jenis_id = $this->input->post('jenis_id');
             if ($jenis_id == 1) {
@@ -1022,7 +1022,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarPemilik', $data);
             $this->load->view('Admin/Pemilik', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $jenis_id = $this->input->post('jenis_id');
             $jenis = '';
@@ -1110,6 +1110,6 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('Admin/Leases', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 }
