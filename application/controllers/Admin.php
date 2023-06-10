@@ -18,7 +18,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('admin/index'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('leases'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -87,7 +87,7 @@ class Admin extends CI_Controller
             ->or_like('last_seen', $keyword)
             ->or_like('waktu_ambil', $keyword)
             ->count_all_results('leases'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -452,7 +452,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('admin/Ruangan'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('ruangan'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -520,7 +520,7 @@ class Admin extends CI_Controller
             ->or_like('gateway', $keyword)
             ->or_like('lantai', $keyword)
             ->count_all_results('ruangan'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -588,7 +588,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('Admin/Ruangan'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('ruangan'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE;
@@ -775,7 +775,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('admin/Pemilik'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('pemilik'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -842,7 +842,7 @@ class Admin extends CI_Controller
             ->or_like('nama_pemilik', $keyword)
             ->or_like('jenis', $keyword)
             ->count_all_results('pemilik'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -908,7 +908,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('Admin/Pemilik'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('pemilik'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE;

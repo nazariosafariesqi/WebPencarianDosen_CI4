@@ -65,7 +65,7 @@
     });
 </script>
 
-<a href=" <?= base_url('user/search') ?>" id="connectMikrotikBtn" type="button" style="display: none;" class="btn btn-success mb-3">Connect Mikrotik</a>
+<a href=" <?= base_url('admin/leases') ?>" id="connectMikrotikBtn" type="button" style="display: none;" class="btn btn-success mb-3">Connect Mikrotik</a>
 <script>
     // Fungsi untuk mengklik tombol Connect Mikrotik secara otomatis
     function autoClickConnectMikrotik() {
