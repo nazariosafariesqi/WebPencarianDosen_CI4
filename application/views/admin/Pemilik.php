@@ -63,12 +63,16 @@
             <form action="<?= base_url('Admin/insertPemilik'); ?>" method="POST">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nama_pemilik">Nama Pemilik</label>
-                        <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" placeholder="">
+                        <label for="mac_address">Mac Address</label>
+                        <select class="form-control" id="mac_address" name="mac_address">
+                            <?php foreach ($leases as $lease) : ?>
+                                <option value="<?= $lease['mac_address'] ?>"><?= $lease['mac_address'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="mac_address">Mac Address</label>
-                        <input type="text" class="form-control" id="mac_address" name="mac_address" placeholder="">
+                        <label for="nama_pemilik">Nama Pemilik</label>
+                        <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="jenis_id">Jenis</label>

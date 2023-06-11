@@ -818,6 +818,7 @@ class Admin extends CI_Controller
 
         $data['pemilik'] = $this->db->get('pemilik')->result_array();
         $data['offset'] = $offset;
+        $data['leases'] = $this->db->get('leases')->result_array();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
