@@ -22,8 +22,12 @@
             }
 
             $API = new RouterOSAPI();
-            $routerIPs = array('192.168.73.1', '192.168.60.1'); // Daftar IP router
-            //, '192.168.73.1','192.168.60.1', '192.168.56.1'
+            $query = $conn->query("SELECT ip_address FROM router");
+            $routerIPs = array();
+
+            while ($row = $query->fetch_assoc()) {
+                $routerIPs[] = $row['ip_address'];
+            }
 
             foreach ($routerIPs as $routerIP) {
                 if ($API->connect($routerIP, 'nazario', 'n4z4r10')) {
@@ -74,13 +78,13 @@
                                 VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
                     }
                     if ($conn->query($sql) === TRUE) {
-                        echo "Data berhasil dimasukkan ke dalam database ";
+                        echo " Data berhasil dimasukkan ke dalam database ";
                     } else {
-                        echo "Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
+                        echo " Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
                     }
                     $API->disconnect();
                 } else {
-                    echo "Tidak bisa terhubung ke Mikrotik ($routerIP)";
+                    echo " Tidak bisa terhubung ke Mikrotik ($routerIP)";
                     echo $API->error_str;
                 }
             }

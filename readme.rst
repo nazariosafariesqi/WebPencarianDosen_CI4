@@ -2,4 +2,4 @@
 
 Nazario Safariesqi Tyo Widjaya
 
-Repository Pengerjaan Skripsi Pencarian Dosen berdasarkan IP Address di JTI Polinema
+Repository Progress Pengerjaan Skripsi "Pencarian Dosen berdasarkan IP Address & Mac Address di JTI Polinema"

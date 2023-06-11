@@ -21,9 +21,9 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function search()
+    public function Search()
     {
-        $data['title'] = 'Search';
+        $data['title'] = 'Cari Dosen';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -32,6 +32,52 @@ class User extends CI_Controller
         $this->load->view('user/search', $data);
         $this->load->view('templates/footer');
     }
+
+    public function HasilSearch()
+    {
+        $keyword = $this->input->get('keyword');
+
+        if (empty($keyword)) {
+            $results = []; // Kalau keyword kosong
+        } else {
+            $sql = "(SELECT p.nama_pemilik, l.mac_address, l.ip_address, l.last_seen, r.no_ruang, r.nama_ruang, r.lantai
+                FROM pemilik p
+                JOIN leases l ON p.mac_address = l.mac_address
+                JOIN ip i ON l.ip_address = i.ip_address
+                JOIN ruangan r ON i.ruangan_id = r.id
+                WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
+                    AND DATE(l.waktu_ambil) = CURDATE()
+                ORDER BY l.last_seen DESC
+                LIMIT 3)
+                UNION
+                (SELECT p.nama_pemilik, l.mac_address, l.ip_address, l.last_seen, r.no_ruang, r.nama_ruang, r.lantai
+                FROM pemilik p
+                JOIN leases l ON p.mac_address = l.mac_address
+                JOIN ip i ON l.ip_address = i.ip_address
+                JOIN ruangan r ON i.ruangan_id = r.id
+                WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
+                    AND (DATE(l.waktu_ambil) <> CURDATE() OR (SELECT COUNT(*) FROM leases WHERE DATE(waktu_ambil) = CURDATE()) = 0)
+                ORDER BY l.last_seen DESC
+                LIMIT 3)";
+
+            $results = $this->db->query($sql)->result_array();
+        }
+
+        $data['title'] = 'Cari Dosen';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['leases'] = $results;
+
+        // Check if results are empty
+        $data['no_data'] = (count($results) === 0);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/HasilSearch', $data);
+        $this->load->view('templates/footer');
+    }
+
+
 
     public function edit()
     {

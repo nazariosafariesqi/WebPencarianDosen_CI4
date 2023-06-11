@@ -18,7 +18,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('admin/index'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('leases'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -64,7 +64,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('admin/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function Search()
@@ -87,7 +87,7 @@ class Admin extends CI_Controller
             ->or_like('last_seen', $keyword)
             ->or_like('waktu_ambil', $keyword)
             ->count_all_results('leases'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -146,7 +146,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('admin/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function Router()
@@ -204,7 +204,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRouter', $data);
         $this->load->view('admin/editRouter', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchRouter()
@@ -278,7 +278,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRouter', $data);
         $this->load->view('Admin/editRouter', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
 
@@ -345,7 +345,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRouter', $data);
             $this->load->view('Admin/editRouter', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
 
             $this->db->insert(
@@ -386,7 +386,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRouter', $data);
             $this->load->view('Admin/editRouter', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
             $ip_address = $this->input->post('ip-edit');
@@ -452,7 +452,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('admin/Ruangan'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('ruangan'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -499,7 +499,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRuangan', $data);
         $this->load->view('admin/editRuangan', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchRuangan()
@@ -520,7 +520,7 @@ class Admin extends CI_Controller
             ->or_like('gateway', $keyword)
             ->or_like('lantai', $keyword)
             ->count_all_results('ruangan'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -577,7 +577,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRuangan', $data);
         $this->load->view('admin/editRuangan', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function insertRuangan()
@@ -588,7 +588,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('Admin/Ruangan'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('ruangan'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE;
@@ -645,7 +645,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRuangan', $data);
             $this->load->view('Admin/editRuangan', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
 
             $this->db->insert(
@@ -691,7 +691,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRuangan', $data);
             $this->load->view('Admin/editRuangan', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
             $no_ruang = $this->input->post('no-ruang');
@@ -775,7 +775,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('admin/Pemilik'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('pemilik'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -822,7 +822,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarPemilik', $data);
         $this->load->view('admin/Pemilik', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchPemilik()
@@ -842,7 +842,7 @@ class Admin extends CI_Controller
             ->or_like('nama_pemilik', $keyword)
             ->or_like('jenis', $keyword)
             ->count_all_results('pemilik'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -897,7 +897,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarPemilik', $data);
         $this->load->view('admin/Pemilik', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function insertPemilik()
@@ -908,7 +908,7 @@ class Admin extends CI_Controller
 
         $config['base_url'] = base_url('Admin/Pemilik'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('pemilik'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE;
@@ -962,7 +962,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarPemilik', $data);
             $this->load->view('admin/Pemilik', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $jenis_id = $this->input->post('jenis_id');
             if ($jenis_id == 1) {
@@ -1022,7 +1022,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarPemilik', $data);
             $this->load->view('Admin/Pemilik', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $jenis_id = $this->input->post('jenis_id');
             $jenis = '';
@@ -1110,6 +1110,6 @@ class Admin extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
         $this->load->view('Admin/Leases', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 }

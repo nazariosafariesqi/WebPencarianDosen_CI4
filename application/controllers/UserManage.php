@@ -19,7 +19,7 @@ class UserManage extends CI_Controller
 
         $config['base_url'] = base_url('UserManage/index'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('user'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -66,7 +66,7 @@ class UserManage extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarUserManage', $data);
         $this->load->view('userManage/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function SearchUser()
@@ -86,7 +86,7 @@ class UserManage extends CI_Controller
             ->or_like('email', $keyword)
             ->or_like('role', $keyword)
             ->count_all_results('user'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -142,7 +142,7 @@ class UserManage extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarUserManage', $data);
         $this->load->view('userManage/index', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates/footerAdmin');
     }
 
     public function insert()
@@ -154,7 +154,7 @@ class UserManage extends CI_Controller
 
         $config['base_url'] = base_url('UserManage/index'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('user'); // Jumlah total data yang akan dipaginasi
-        $config['per_page'] = 7; // Jumlah data per halaman
+        $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
         $config['num_links'] = 1; // Jumlah link pagination yang ditampilkan di sekitar halaman aktif
         $config['use_page_numbers'] = TRUE; // Menggunakan nomor halaman bukan offset
@@ -208,7 +208,7 @@ class UserManage extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarUserManage', $data);
             $this->load->view('userManage/index', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $role_id = $this->input->post('role_id');
             if ($role_id == 1) {
@@ -266,7 +266,7 @@ class UserManage extends CI_Controller
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarUserManage', $data);
             $this->load->view('userManage/index', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
             $name = $this->input->post('name-edit');

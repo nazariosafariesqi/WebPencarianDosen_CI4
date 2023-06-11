@@ -7,18 +7,16 @@
 </div>
 <!-- /.container-fluid -->
 <div class="row">
-    <div class="col-lg-8 ml-4">
-        <div class="input-group">
-            <input type="text" class="form-control bg-grey border-0 small" placeholder="Cari Nama Dosen" aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
+    <div class="col-lg ml-4">
+        <form action="<?= base_url('User/HasilSearch'); ?>" method="GET" class="form-inline mb-4">
+            <div class="form-group">
+                <input type="text" value="<?= isset($keyword) ? $keyword : '' ?>" name="keyword" autofocus autocomplete="off" class="form-control bg-grey border small" style="width: 800px;" placeholder="Search Keyword" aria-label="Search" aria-describedby="basic-addon2">
             </div>
-        </div>
+            <div class="input-group-append">
+                <input class="btn btn-info ml-2" type="submit" name="search" value="Search"></input>
+            </div>
         </form>
     </div>
 </div>
-
 </div>
 <!-- End of Main Content -->
