@@ -681,10 +681,11 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('nama-ruang', 'Nama Ruang', 'required|trim|min_length[3]', [
             'min_length' => 'Nama Ruang too short!'
         ]);
-        $this->form_validation->set_rules('gateway-edit', 'Gateway', 'required|trim|min_length[7]|callback_check_gateway', [
-            'min_length' => 'Format Gateway tidak sesuai',
-            'check_gateway' => 'Gateway is already registered!'
-        ]);
+
+        //$this->form_validation->set_rules('gateway-edit', 'Gateway', 'required|trim|min_length[7]|callback_check_gateway', [
+        //    'min_length' => 'Format Gateway tidak sesuai',
+        //    'check_gateway' => 'Gateway is already registered!'
+        //]);
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
@@ -741,16 +742,16 @@ class Admin extends CI_Controller
         return TRUE;
     }
 
-    public function check_gateway($gateway)
-    {
-        $user_id = $this->input->post('user_id');
-        $existingUser = $this->db->get_where('ruangan', ['gateway' => $gateway])->row_array();
+    //public function check_gateway($gateway)
+    //{
+    //    $user_id = $this->input->post('user_id');
+    //   $existingUser = $this->db->get_where('ruangan', ['gateway' => $gateway])->row_array();
 
-        if ($existingUser && $existingUser['id'] != $user_id) {
-            return FALSE;
-        }
-        return TRUE;
-    }
+    //    if ($existingUser && $existingUser['id'] != $user_id) {
+    //        return FALSE;
+    //    }
+    //    return TRUE;
+    //}
 
     public function deleteRuangan()
     {

@@ -113,7 +113,7 @@
                     </div>
                     <div class="form-group">
                         <label for="gateway-edit">Gateway</label>
-                        <input type="text" class="form-control" id="gateway-edit" name="gateway-edit" placeholder="Enter Gateway Number">
+                        <input readonly type="text" class="form-control" id="gateway-edit" name="gateway-edit" placeholder="Enter Gateway Number">
                     </div>
                     <div class="form-group">
                         <label for="lantai">Lantai</label>
