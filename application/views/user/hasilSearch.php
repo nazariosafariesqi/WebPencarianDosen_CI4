@@ -27,7 +27,6 @@
                             <th scope="col">Nama Pemilik</th>
                             <th scope="col">IP Address</th>
                             <th scope="col">Last Seen</th>
-
                             <th scope="col">Nama Ruang</th>
                             <th scope="col">Lantai</th>
                             <th scope="col">Waktu</th>
@@ -40,7 +39,6 @@
                                 <td><?= $result['nama_pemilik'] ?></td>
                                 <td><?= $result['ip_address'] ?></td>
                                 <td><?= $result['last_seen'] ?></td>
-
                                 <td><?= $result['nama_ruang'] ?></td>
                                 <td><?= $result['lantai'] ?></td>
                                 <td><?= $result['waktu_ambil'] ?></td>

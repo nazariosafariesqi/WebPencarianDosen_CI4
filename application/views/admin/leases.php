@@ -24,6 +24,13 @@
             $API = new RouterOSAPI();
             $query = $conn->query("SELECT ip_address FROM router");
             $routerIPs = array();
+            $leasesData = array();
+            $ipAddress = '';
+            $macAddress = '';
+            $activeHostName = '';
+            $timeExpires = '';
+            $lastSeen = '';
+            $success = true; // Inisialisasi flag
 
             while ($row = $query->fetch_assoc()) {
                 $routerIPs[] = $row['ip_address'];
@@ -39,7 +46,7 @@
 
                     //echo "IP Address: ";
                     foreach ($ipAddresses as $address) {
-                        $address['address'];
+                        $ipAddress = $address['address'];
                     }
 
                     // Mengambil DHCP leases
@@ -49,38 +56,55 @@
                     //echo "<br>DHCP Leases:";
                     foreach ($leases as $lease) {
                         //var_dump($lease);
-                        $lease['address'];
+                        if (isset($lease['address'])) {
+                            $ipAddress = $lease['address'];
+                        }
 
                         if (isset($lease['mac-address'])) {
-                            $lease['mac-address'];
+                            $macAddress = $lease['mac-address'];
                         }
 
                         if (isset($lease['host-name'])) {
-                            $lease['host-name'];
+                            $activeHostName = $lease['host-name'];
                         }
 
                         if (isset($lease['expires-after'])) {
-                            $lease['expires-after'];
+                            $timeExpires = $lease['expires-after'];
                         }
 
                         if (isset($lease['last-seen'])) {
-                            $lease['last-seen'];
+                            $lastSeen = $lease['last-seen'];
                         }
 
-                        // Memasukkan data ke dalam database
-                        $ipAddress = isset($lease['address']) ? $lease['address'] : '';
-                        $macAddress = isset($lease['mac-address']) ? $lease['mac-address'] : '';
-                        $activeHostName = isset($lease['host-name']) ? $lease['host-name'] : '';
-                        $timeExpires = isset($lease['expires-after']) ? $lease['expires-after'] : '';
-                        $lastSeen = isset($lease['last-seen']) ? $lease['last-seen'] : '';
+                        $leasesData[] = array(
+                            'ip_address' => $ipAddress,
+                            'mac_address' => $macAddress,
+                            'active_host_name' => $activeHostName,
+                            'time_expires' => $timeExpires,
+                            'last_seen' => $lastSeen
+                        );
+                    }
+
+                    // Memasukkan data ke dalam database
+                    foreach ($leasesData as $leaseData) {
+                        $ipAddress = $leaseData['ip_address'];
+                        $macAddress = $leaseData['mac_address'];
+                        $activeHostName = $leaseData['active_host_name'];
+                        $timeExpires = $leaseData['time_expires'];
+                        $lastSeen = $leaseData['last_seen'];
 
                         $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen)
                                 VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
+
+                        if ($conn->query($sql) !== TRUE) {
+                            $success = false; // Set flag menjadi false jika terjadi kesalahan saat memasukkan data ke dalam database
+                            echo "Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
+                            break; // Berhenti loop jika terjadi kesalahan
+                        }
                     }
-                    if ($conn->query($sql) === TRUE) {
-                        echo " Data berhasil dimasukkan ke dalam database ";
-                    } else {
-                        echo " Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
+
+                    if ($success) {
+                        echo "Data berhasil dimasukkan ke dalam database";
                     }
                     $API->disconnect();
                 } else {

@@ -64,11 +64,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="mac_address">Mac Address</label>
-                        <select class="form-control" id="mac_address" name="mac_address">
-                            <?php foreach ($leases as $lease) : ?>
-                                <option value="<?= $lease['mac_address'] ?>" data-search="<?= strtolower($lease['mac_address']) ?>"><?= $lease['mac_address'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <input type="text" class="form-control" id="mac_address" name="mac_address" placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="nama_pemilik">Nama Pemilik</label>
@@ -93,34 +89,6 @@
     </div>
 </div>
 
-<script>
-    function searchMacAddress() {
-        // Mengambil input value
-        var searchInput = document.getElementById('search_mac').value.toLowerCase();
-
-        // Elemen untuk memilih dan opsinya
-        var selectElement = document.getElementById('mac_address');
-        var options = selectElement.options;
-
-        // Perulangan dari opsinya dan show/hide berdasarkan inputan
-        for (var i = 0; i < options.length; i++) {
-            var option = options[i];
-            var macAddress = option.dataset.search.toLowerCase();
-
-            // Menentukan apakah setiap 12 karakter dari opsi cocok dengan pencarian
-            if (macAddress.substr(0, searchInput.length) === searchInput || searchInput === '') {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-            }
-        }
-    }
-
-    // Panggil fungsi searchMacAddress ke event keyup input pencarian
-    document.getElementById('search_mac').addEventListener('keyup', searchMacAddress);
-</script>
-
-
 <!-- Modal Edit / Update -->
 <div class="modal fade" id="editPemilikModal" tabindex="-1" role="dialog" aria-labelledby="editPemilikModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -136,11 +104,7 @@
                     <input type="hidden" name="user_id" id="user_id">
                     <div class="form-group">
                         <label for="mac-address">Mac Address</label>
-                        <select class="form-control" id="mac-address" name="mac-address">
-                            <?php foreach ($leases as $lease) : ?>
-                                <option value="<?= $lease['mac_address'] ?>" data-search="<?= strtolower($lease['mac_address']) ?>"><?= $lease['mac_address'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <input type="text" class="form-control" id="mac-address" name="mac-address" placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="nama-pemilik">Nama Pemilik</label>

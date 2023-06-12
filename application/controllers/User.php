@@ -47,17 +47,7 @@ class User extends CI_Controller
             JOIN ruangan r ON i.ruangan_id = r.id
             WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
                 AND DATE(l.waktu_ambil) = CURDATE()
-            ORDER BY l.last_seen DESC
-            LIMIT 5)
-            UNION
-            (SELECT p.nama_pemilik, l.mac_address, l.ip_address, l.last_seen, r.nama_ruang, r.lantai, l.waktu_ambil
-            FROM pemilik p
-            JOIN leases l ON p.mac_address = l.mac_address
-            JOIN ip i ON l.ip_address = i.ip_address
-            JOIN ruangan r ON i.ruangan_id = r.id
-            WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
-                AND (DATE(l.waktu_ambil) <> CURDATE() OR (SELECT COUNT(*) FROM leases WHERE DATE(waktu_ambil) = CURDATE()) = 0)
-            ORDER BY l.last_seen DESC
+            ORDER BY l.waktu_ambil DESC
             LIMIT 5)";
 
             $results = $this->db->query($sql)->result_array();
