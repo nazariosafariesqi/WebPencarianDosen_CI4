@@ -18,7 +18,7 @@
                                     </div>
 
                                     <?= $this->session->flashdata('message'); ?>
-                                    <form class="user" method="post" action="<?= base_url('auth'); ?>">
+                                    <form class="user" method="post" action="<?= base_url('Auth/index'); ?>">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Enter Email Address..." value="<?= set_value('email'); ?>">
                                         </div>
