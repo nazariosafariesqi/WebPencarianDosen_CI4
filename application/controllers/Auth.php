@@ -34,7 +34,7 @@ class Auth extends CI_Controller
     {
         $data['title'] = 'Login Page';
         $this->load->view('templates/auth_header', $data);
-        $this->load->view('Auth/Login');
+        $this->load->view('auth/login');
         $this->load->view('templates/auth_footer');
     }
 
