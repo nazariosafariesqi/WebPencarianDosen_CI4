@@ -18,7 +18,7 @@
                                     </div>
 
                                     <?= $this->session->flashdata('message'); ?>
-                                    <form class="user" method="post" action="<?= base_url('Auth'); ?>">
+                                    <form class="user" method="post" action="<?= base_url('Auth/index'); ?>">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Enter Email Address..." value="<?= set_value('email'); ?>">
                                         </div>
@@ -36,7 +36,7 @@
 
                                     <div class="text-right">
                                         <img src="<?= base_url('assets/') ?>img/jti_polinema.ico" alt="Logo JTI" style="float:left">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="">Forgot Password?</a>
                                     </div>
                                     <!--
                                     <div class="text-right">
