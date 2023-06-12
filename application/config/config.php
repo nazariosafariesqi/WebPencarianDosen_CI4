@@ -116,7 +116,6 @@ $config['enable_hooks'] = FALSE;
 | https://codeigniter.com/userguide3/general/creating_libraries.html
 |
 */
-$route['auth'] = 'auth/index';
 
 $config['subclass_prefix'] = 'MY_';
 

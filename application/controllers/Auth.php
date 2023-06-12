@@ -22,15 +22,15 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Login Page';
             $this->load->view('templates/auth_header', $data);
-            $this->load->view('auth/login');
+            $this->load->view('Auth/Login');
             $this->load->view('templates/auth_footer');
         } else {
             //Jika validasinya sukses
-            $this->_login();
+            $this->login();
         }
     }
 
-    private function _login()
+    public function login()
     {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
