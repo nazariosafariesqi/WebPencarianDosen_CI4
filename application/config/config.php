@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/WebPencarianDosen_CI4/';
+$config['base_url'] = 'http://192.168.60.80/WebPencarianDosen_CI4/';
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +116,8 @@ $config['enable_hooks'] = FALSE;
 | https://codeigniter.com/userguide3/general/creating_libraries.html
 |
 */
+$route['auth'] = 'auth/index';
+
 $config['subclass_prefix'] = 'MY_';
 
 /*
