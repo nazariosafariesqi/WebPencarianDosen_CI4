@@ -6,13 +6,15 @@
 
     <div class="row">
         <div class="col-lg">
-            <a href="<?= base_url('admin/leases') ?>" id="connectMikrotikBtn" type="button" class="btn btn-success mb-3">Connect Mikrotik</a>
+            <a href="<?= base_url('admin/cekKoneksi') ?>" id="cekKoneksikBtn" type="button" class="btn btn-success mb-3">Cek Koneksi Mikrotik</a>
+            <a href="<?= base_url('admin/leases') ?>" id="connectMikrotikBtn" type="button" class="btn btn-success mb-3 float-right">Ambil Data Mikrotik</a>
             <script>
                 document.getElementById('connectMikrotikBtn').addEventListener('click', function() {
                     this.innerHTML = 'Sedang terhubung...';
                     this.disabled = true;
                 });
             </script>
+
             <table class="table table-hover">
                 <thead>
                     <tr>

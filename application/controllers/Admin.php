@@ -66,6 +66,17 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
         $this->load->view('templates/footerAdmin');
     }
+    public function cekKoneksi()
+    {
+        $data['title'] = 'Dashboard Leases Admin';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar2', $data);
+        $this->load->view('admin/cekKoneksi', $data);
+        $this->load->view('templates/footerAdmin');
+    }
 
     public function Search()
     {
