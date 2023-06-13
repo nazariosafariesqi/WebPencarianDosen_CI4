@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title><?= $title; ?></title>
-    <link rel="icon" type="image/ico" href="<?= base_url('Loc_nobg.ico') ?>">
+    <link rel="icon" type="image/ico" href="<?= base_url('Loc_circle.ico') ?>">
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('assets/'); ?>fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
