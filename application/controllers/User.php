@@ -9,30 +9,6 @@ class User extends CI_Controller
         is_logged_in();
     }
 
-    public function index()
-    {
-        $data['title'] = 'My Profile';
-        $data['user'] = $this->db->get_where('user', ['email' =>
-        $this->session->userdata('email')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('user/index', $data);
-        $this->load->view('templates/footer');
-    }
-
-    public function Search()
-    {
-        $data['title'] = 'Cari Dosen';
-        $data['user'] = $this->db->get_where('user', ['email' =>
-        $this->session->userdata('email')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('user/search', $data);
-        $this->load->view('templates/footer');
-    }
-
     public function HasilSearch()
     {
         $keyword = $this->input->get('keyword');
@@ -64,6 +40,30 @@ class User extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/hasilSearch', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function index()
+    {
+        $data['title'] = 'My Profile';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function Search()
+    {
+        $data['title'] = 'Cari Dosen';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('user/search', $data);
         $this->load->view('templates/footer');
     }
 

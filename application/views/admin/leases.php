@@ -24,12 +24,6 @@
             $API = new RouterOSAPI();
             $query = $conn->query("SELECT ip_address FROM router");
             $routerIPs = array();
-            $leasesData = array();
-            $ipAddress = '';
-            $macAddress = '';
-            $activeHostName = '';
-            $timeExpires = '';
-            $lastSeen = '';
             $success = true; // Inisialisasi flag
 
             while ($row = $query->fetch_assoc()) {
@@ -76,41 +70,31 @@
                             $lastSeen = $lease['last-seen'];
                         }
 
-                        $leasesData[] = array(
-                            'ip_address' => $ipAddress,
-                            'mac_address' => $macAddress,
-                            'active_host_name' => $activeHostName,
-                            'time_expires' => $timeExpires,
-                            'last_seen' => $lastSeen
-                        );
-                    }
+                        $existingData = $conn->query("SELECT * FROM leases WHERE waktu_ambil = CURDATE() AND ip_address = '$ipAddress' AND last_seen = '$lastSeen' AND time_expires = '$timeExpires'");
 
-                    // Memasukkan data ke dalam database
-                    foreach ($leasesData as $leaseData) {
-                        $ipAddress = $leaseData['ip_address'];
-                        $macAddress = $leaseData['mac_address'];
-                        $activeHostName = $leaseData['active_host_name'];
-                        $timeExpires = $leaseData['time_expires'];
-                        $lastSeen = $leaseData['last_seen'];
+                        if ($existingData->num_rows > 0) {
+                            // Jika data dengan waktu dan IP address yang sama sudah ada, abaikan dan tidak perlu memasukkan data baru
+                            echo "Data dengan waktu dan IP address yang sama sudah ada dalam database.";
+                        } else {
+                            // Jika data dengan waktu dan IP address yang sama belum ada, masukkan data baru
+                            $sqlInsert = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen)
+                        VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
 
-                        $sql = "INSERT INTO leases (ip_address, mac_address, active_host_name, time_expires, last_seen)
-                                VALUES ('$ipAddress', '$macAddress', '$activeHostName', '$timeExpires', '$lastSeen')";
-
-                        if ($conn->query($sql) !== TRUE) {
-                            $success = false; // Set flag menjadi false jika terjadi kesalahan saat memasukkan data ke dalam database
-                            echo "Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
-                            break; // Berhenti loop jika terjadi kesalahan
+                            if ($conn->query($sqlInsert) !== TRUE) {
+                                $success = false;
+                                echo "Terjadi kesalahan saat memasukkan data ke dalam database: " . $conn->error;
+                            }
                         }
-                    }
-
-                    if ($success) {
-                        echo "Data berhasil dimasukkan ke dalam database";
                     }
                     $API->disconnect();
                 } else {
-                    echo " Tidak bisa terhubung ke Mikrotik ($routerIP)";
+                    echo "Tidak bisa terhubung ke Mikrotik ($routerIP)";
                     echo $API->error_str;
+                    continue; // Melanjutkan iterasi ke router berikutnya jika koneksi gagal
                 }
+            }
+            if ($success) {
+                echo "Proses selesai. Data berhasil dimasukkan ke dalam database.";
             }
             ?>
             <br><br><br><br>
