@@ -16,9 +16,9 @@
 
             $conn = new mysqli($servername, $username, $password, $dbname);
             if ($conn->connect_error) {
-                die("Koneksi database gagal: " . $conn->connect_error);
+                die("Koneksi database gagal: " . $conn->connect_error . "<br>");
             } else {
-                echo "Koneksi database berhasil & ";
+                echo "Koneksi database berhasil <br>";
             }
 
             $API = new RouterOSAPI();
@@ -32,7 +32,7 @@
 
             foreach ($routerIPs as $routerIP) {
                 if ($API->connect($routerIP, 'nazario', 'n4z4r10')) {
-                    echo "<br>Koneksi ke Mikrotik ($routerIP) sukses" . "<br>";
+                    echo "<br>Koneksi ke Mikrotik ($routerIP) sukses";
 
                     // Mengambil IP address
                     $API->write('/ip/address/print');
@@ -88,13 +88,13 @@
                     }
                     $API->disconnect();
                 } else {
-                    echo "Tidak bisa terhubung ke Mikrotik ($routerIP)";
+                    echo "<br>Tidak bisa terhubung ke Mikrotik ($routerIP)";
                     echo $API->error_str;
                     continue; // Melanjutkan iterasi ke router berikutnya jika koneksi gagal
                 }
             }
             if ($success) {
-                echo "Proses selesai. Data berhasil dimasukkan ke dalam database.";
+                echo "<br>Proses selesai. Data berhasil dimasukkan ke dalam database.";
             }
             ?>
             <br><br><br><br>
