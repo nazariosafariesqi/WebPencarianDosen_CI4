@@ -94,7 +94,7 @@
                 }
             }
             if ($success) {
-                echo "<br>Proses selesai. Data berhasil dimasukkan ke dalam database.";
+                echo "<br><br>Proses selesai. Data berhasil dimasukkan ke dalam database.";
             }
             ?>
             <br><br><br><br>
