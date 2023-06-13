@@ -40,14 +40,14 @@ class User extends CI_Controller
         if (empty($keyword)) {
             $results = []; // Jika keyword kosong
         } else {
-            $sql = "(SELECT p.nama_pemilik, l.mac_address, l.ip_address, l.last_seen, r.nama_ruang, r.lantai, l.waktu_ambil
+            $sql = "(SELECT p.nama_pemilik, p.jenis, l.mac_address, l.ip_address, l.last_seen, r.nama_ruang, r.lantai, l.waktu_ambil
             FROM pemilik p
             JOIN leases l ON p.mac_address = l.mac_address
             JOIN ip i ON l.ip_address = i.ip_address
             JOIN ruangan r ON i.ruangan_id = r.id
             WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
                 AND DATE(l.waktu_ambil) = CURDATE()
-            ORDER BY l.waktu_ambil DESC
+            ORDER BY l.waktu_ambil DESC, l.last_seen ASC
             LIMIT 5)";
 
             $results = $this->db->query($sql)->result_array();

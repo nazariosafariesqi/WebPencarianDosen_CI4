@@ -77,7 +77,7 @@
 
     // Mengatur tombol Connect Mikrotik terklik otomatis setiap 10 menit saat halaman dimuat
     window.addEventListener('load', function() {
-        setInterval(autoClickConnectMikrotik, 600000); // 600000 ms = 10 menit
+        setInterval(autoClickConnectMikrotik, 300000); // 600000 ms = 10 menit
     });
 
     // Fungsi untuk menampilkan notifikasi menggunakan alert

@@ -66,6 +66,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
         $this->load->view('templates/footerAdmin');
     }
+
     public function cekKoneksi()
     {
         $data['title'] = 'Dashboard Leases Admin';
@@ -288,7 +289,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbarRouter', $data);
-        $this->load->view('Admin/editRouter', $data);
+        $this->load->view('admin/editRouter', $data);
         $this->load->view('templates/footerAdmin');
     }
 
@@ -355,7 +356,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRouter', $data);
-            $this->load->view('Admin/editRouter', $data);
+            $this->load->view('admin/editRouter', $data);
             $this->load->view('templates/footerAdmin');
         } else {
 
@@ -396,7 +397,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRouter', $data);
-            $this->load->view('Admin/editRouter', $data);
+            $this->load->view('admin/editRouter', $data);
             $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
@@ -451,7 +452,7 @@ class Admin extends CI_Controller
             Router Deleted
         </div>'
         );
-        redirect('Admin/Router');
+        redirect('admin/router');
     }
 
 
@@ -655,7 +656,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRuangan', $data);
-            $this->load->view('Admin/editRuangan', $data);
+            $this->load->view('admin/editRuangan', $data);
             $this->load->view('templates/footerAdmin');
         } else {
 
@@ -702,7 +703,7 @@ class Admin extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbarRuangan', $data);
-            $this->load->view('Admin/editRuangan', $data);
+            $this->load->view('admin/editRuangan', $data);
             $this->load->view('templates/footerAdmin');
         } else {
             $user_id = $this->input->post('user_id');
@@ -739,7 +740,7 @@ class Admin extends CI_Controller
                     Data Ruangan Updated
                 </div>'
             );
-            redirect('Admin/Ruangan');
+            redirect('admin/ruangan');
         }
     }
     public function check_no_ruang($no_ruang)
