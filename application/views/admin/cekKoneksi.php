@@ -10,7 +10,7 @@
             // Koneksi database
             $servername = "localhost";
             $username = "root";
-            $password = "";
+            $password = "nazario123";
             $dbname = "wpd";
             $conn = new mysqli($servername, $username, $password, $dbname);
             if ($conn->connect_error) {
