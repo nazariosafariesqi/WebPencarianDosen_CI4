@@ -10,26 +10,6 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function Auth()
-    {
-        if ($this->session->userdata('email')) {
-            redirect('user');
-        }
-
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
-
-        if ($this->form_validation->run() == FALSE) {
-            $data['title'] = 'Login Page';
-            $this->load->view('templates/auth_header', $data);
-            $this->load->view('auth/login');
-            $this->load->view('templates/auth_footer');
-        } else {
-            //Jika validasinya sukses
-            $this->login();
-        }
-    }
-
     public function index()
     {
         if ($this->session->userdata('email')) {
