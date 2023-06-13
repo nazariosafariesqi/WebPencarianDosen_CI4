@@ -63,7 +63,7 @@ class User extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('user/HasilSearch', $data);
+        $this->load->view('user/hasilSearch', $data);
         $this->load->view('templates/footer');
     }
 
