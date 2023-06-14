@@ -101,7 +101,6 @@
             <div class="row">
                 <a href="<?= base_url('admin') ?>" type="button" class="btn btn-success mb-3">Back to Dashboard</a>
             </div>
-
         </div>
     </div>
 </div>
