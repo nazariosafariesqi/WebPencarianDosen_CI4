@@ -10,13 +10,13 @@
         <form action="<?= base_url('Prediksi/HasilPrediksi'); ?>" method="POST" class="form-inline mb-4">
             <div class="form-group">
                 <select class="form-control" name="selectedDay">
-                    <option value="Senin" <?= $selectedDay == 'Senin' ? 'selected' : '' ?>>Senin</option>
-                    <option value="Selasa" <?= $selectedDay == 'Selasa' ? 'selected' : '' ?>>Selasa</option>
-                    <option value="Rabu" <?= $selectedDay == 'Rabu' ? 'selected' : '' ?>>Rabu</option>
-                    <option value="Kamis" <?= $selectedDay == 'Kamis' ? 'selected' : '' ?>>Kamis</option>
-                    <option value="Jumat" <?= $selectedDay == 'Jumat' ? 'selected' : '' ?>>Jumat</option>
-                    <option value="Sabtu" <?= $selectedDay == 'Sabtu' ? 'selected' : '' ?>>Sabtu</option>
-                    <option value="Minggu" <?= $selectedDay == 'Minggu' ? 'selected' : '' ?>>Minggu</option>
+                    <option value="Monday" <?= $selectedDay == 'Monday' ? 'selected' : '' ?>>Senin</option>
+                    <option value="Tuesday" <?= $selectedDay == 'Tuesday' ? 'selected' : '' ?>>Selasa</option>
+                    <option value="Wednesday" <?= $selectedDay == 'Wednesday' ? 'selected' : '' ?>>Rabu</option>
+                    <option value="Thursday" <?= $selectedDay == 'Thursday' ? 'selected' : '' ?>>Kamis</option>
+                    <option value="Friday" <?= $selectedDay == 'Friday' ? 'selected' : '' ?>>Jumat</option>
+                    <option value="Saturday" <?= $selectedDay == 'Saturday' ? 'selected' : '' ?>>Sabtu</option>
+                    <option value="Sunday" <?= $selectedDay == 'Sunday' ? 'selected' : '' ?>>Minggu</option>
                 </select>
             </div>
             <div class="form-group ml-2">
@@ -33,7 +33,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Hari</th>
+                            <th scope="col">Day</th>
                             <th scope="col">Nama Pemilik</th>
                             <th scope="col">Jenis</th>
                             <th scope="col">Last Seen</th>
@@ -45,7 +45,7 @@
                     <tbody>
                         <?php foreach ($leases as $index => $result) : ?>
                             <tr>
-                                <td><?= $selectedDay ?></td>
+                                <th><?= $selectedDay ?></th>
                                 <td><?= $result['nama_pemilik'] ?></td>
                                 <td><?= $result['jenis'] ?></td>
                                 <td><?= $result['last_seen'] ?></td>

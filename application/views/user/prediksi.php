@@ -10,13 +10,13 @@
         <form action="<?= base_url('Prediksi/HasilPrediksi'); ?>" method="POST" class="form-inline mb-4">
             <div class="form-group">
                 <select class="form-control" name="selectedDay">
-                    <option value="Senin">Senin</option>
-                    <option value="Selasa">Selasa</option>
-                    <option value="Rabu">Rabu</option>
-                    <option value="Kamis">Kamis</option>
-                    <option value="Jumat">Jumat</option>
-                    <option value="Sabtu">Sabtu</option>
-                    <option value="Minggu">Minggu</option>
+                    <option value="Monday">Senin</option>
+                    <option value="Tuesday">Selasa</option>
+                    <option value="Wednesday">Rabu</option>
+                    <option value="Thursday">Kamis</option>
+                    <option value="Friday">Jumat</option>
+                    <option value="Saturday">Sabtu</option>
+                    <option value="Sunday">Minggu</option>
                 </select>
             </div>
             <div class="form-group ml-2">
