@@ -3,7 +3,6 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
-
     <div class="row">
         <div class="col-lg">
             <?= form_error('nama_pemilik', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
@@ -129,32 +128,6 @@
     </div>
 </div>
 
-<script>
-    function searchMacAddress() {
-        // Mengambil input value
-        var searchInput = document.getElementById('search_mac').value.toLowerCase();
-
-        // Elemen untuk memilih dan opsinya
-        var selectElement = document.getElementById('mac-address');
-        var options = selectElement.options;
-
-        // Perulangan dari opsinya dan show/hide berdasarkan inputan
-        for (var i = 0; i < options.length; i++) {
-            var option = options[i];
-            var macAddress = option.dataset.search.toLowerCase();
-
-            // Menentukan apakah setiap 12 karakter dari opsi cocok dengan pencarian
-            if (macAddress.substr(0, searchInput.length) === searchInput || searchInput === '') {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-            }
-        }
-    }
-
-    // Panggil fungsi searchMacAddress ke event keyup input pencarian
-    document.getElementById('search_mac').addEventListener('keyup', searchMacAddress);
-</script>
 
 <!-- Modal Delete Pemilik-->
 <div class="modal fade" id="deletePemilikModal" tabindex="-1" role="dialog" aria-labelledby="deletePemilikModalLabel" aria-hidden="true">

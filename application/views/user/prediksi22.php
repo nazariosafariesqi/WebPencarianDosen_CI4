@@ -10,13 +10,25 @@ if ($conn->connect_error) {
     die("Koneksi database gagal: " . $conn->connect_error);
 }
 
-// Mengambil data dari tabel "leases"
-$query = "SELECT mac_address, waktu_ambil FROM leases";
-$result = $conn->query($query);
+// Mengambil data dari tabel "leases" dengan filter selectedDay dan keyword
+$selectedDay = $_POST['selectedDay'];
+$keyword = $_POST['keyword'];
+$sql = "SELECT p.nama_pemilik, p.jenis, l.mac_address, l.ip_address, l.last_seen, r.nama_ruang, r.lantai, l.waktu_ambil, DAYNAME(l.waktu_ambil) AS day_name
+        FROM pemilik p
+        JOIN leases l ON p.mac_address = l.mac_address
+        JOIN ip i ON l.ip_address = i.ip_address
+        JOIN ruangan r ON i.ruangan_id = r.id
+        WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
+            AND DAYNAME(l.waktu_ambil) = '" . $selectedDay . "'
+        ORDER BY l.waktu_ambil DESC, l.last_seen ASC
+        LIMIT 10";
+$result = $conn->query($sql);
 $dataPoints = array();
+
 while ($row = $result->fetch_assoc()) {
-    $dataPoints[] = array($row['mac_address'], $row['waktu_ambil']);
+    $dataPoints[] = array($row[$selectedDay], $row[$keyword], $row['waktu_ambil']);
 }
+
 
 // Fungsi K-Means Clustering
 function kMeansClustering($dataPoints, $k, $maxIterations = 100)
