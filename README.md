@@ -17,7 +17,7 @@ Repository Progress Pengerjaan Skripsi "Pencarian Dosen berdasarkan IP Address &
 
 ## Authors
 
-- [@nazariosafariesqi](https://www.github.com/nazariosafariesqi)
+[@nazariosafariesqi](https://www.github.com/nazariosafariesqi)
 
 
 ## Features
