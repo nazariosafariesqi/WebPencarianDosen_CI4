@@ -594,7 +594,7 @@ class Admin extends CI_Controller
 
     public function insertRuangan()
     {
-        $data['title'] = 'Edit Pemilik';
+        $data['title'] = 'Edit Ruangan';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
@@ -916,7 +916,7 @@ class Admin extends CI_Controller
 
     public function insertPemilik()
     {
-        $data['title'] = 'Add Pemilik';
+        $data['title'] = 'Edit Pemilik';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
