@@ -89,7 +89,7 @@ class User extends CI_Controller
             $upload_image = $_FILES['image']['name'];
 
             if ($upload_image) {
-                $config['allowed_type'] = 'gif|jpg|png';
+                $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size'] = '4096';
                 $config['upload_path'] = './assets/img/profile/';
                 $this->load->library('upload', $config);
