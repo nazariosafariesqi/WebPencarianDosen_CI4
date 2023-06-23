@@ -88,7 +88,7 @@
                     }
                     $API->disconnect();
                 } else {
-                    echo "<br>Tidak bisa terhubung ke Mikrotik ($routerIP)";
+                    echo "<br>Tidak bisa terhubung ke Mikrotik ($routerIP) ";
                     echo $API->error_str;
                     $success = false;
                     continue; // Melanjutkan iterasi ke router berikutnya jika koneksi gagal
