@@ -34,9 +34,6 @@
                                     </form>
                                     <hr>
 
-                                    <div>
-                                        
-                                    </div>
                                     <!--
                                     <div class="text-right">
                                          <a class="small" href="<?= base_url('auth/registration') ?>">Create an Account!</a> 
