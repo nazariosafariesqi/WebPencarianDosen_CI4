@@ -34,10 +34,7 @@
                                     </form>
                                     <hr>
 
-                                    <div class="text-right">
-                                        <img src="<?= base_url('assets/') ?>img/jti_polinema.ico" alt="Logo JTI" style="float:left">
-                                        <a class="small" href="">Forgot Password?</a>
-                                    </div>
+                                    
                                     <!--
                                     <div class="text-right">
                                          <a class="small" href="<?= base_url('auth/registration') ?>">Create an Account!</a> 
