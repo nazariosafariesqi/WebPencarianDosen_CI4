@@ -69,7 +69,8 @@
                         if (isset($lease['last-seen'])) {
                             $lastSeen = $lease['last-seen'];
                         }
-
+                        
+                        // Memeriksa keberadaan data dalam database
                         $existingData = $conn->query("SELECT * FROM leases WHERE waktu_ambil = CURDATE() AND ip_address = '$ipAddress' AND last_seen = '$lastSeen' AND time_expires = '$timeExpires'");
 
                         if ($existingData->num_rows > 0) {
