@@ -64,34 +64,7 @@
 </script>
 
 <a href=" <?= base_url('admin/leases') ?>" id="connectMikrotikBtn" type="button" style="display: none;" class="btn btn-success mb-3">Connect Mikrotik</a>
-<script>
-    // Fungsi untuk mengklik tombol Connect Mikrotik secara otomatis
-    function autoClickConnectMikrotik() {
-        var connectMikrotikBtn = document.getElementById('connectMikrotikBtn');
-        if (connectMikrotikBtn) {
-            connectMikrotikBtn.click();
-        }
-    }
 
-    // Mengatur tombol Connect Mikrotik terklik otomatis setiap 10 menit saat halaman dimuat
-    window.addEventListener('load', function() {
-        setInterval(autoClickConnectMikrotik, 450000); // 600000 ms = 10 menit
-    });
-
-    // Fungsi untuk menampilkan notifikasi menggunakan alert
-    function showAlert(message) {
-        alert(message);
-    }
-
-    // Fungsi untuk mengklik tombol Connect Mikrotik secara otomatis
-    function autoClickConnectMikrotik() {
-        var connectMikrotikBtn = document.getElementById('connectMikrotikBtn');
-        connectMikrotikBtn.click();
-
-        // Menampilkan notifikasi sedang menghubungkan ke Mikrotik
-        showAlert('Sedang menghubungkan ke Mikrotik...');
-    }
-</script>
 </body>
 
 </html>
