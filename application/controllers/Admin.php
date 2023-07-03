@@ -15,7 +15,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $config['base_url'] = base_url('admin/Performance'); // URL base halaman
+        $config['base_url'] = base_url('admin/performance'); // URL base halaman
         $config['total_rows'] = $this->db->count_all('eksekusi'); // Jumlah total data yang akan dipaginasi
         $config['per_page'] = 10; // Jumlah data per halaman
         $config['uri_segment'] = 3; // URI segment yang menyimpan nomor halaman
@@ -62,7 +62,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar2', $data);
-        $this->load->view('admin/Performance', $data);
+        $this->load->view('admin/performance', $data);
         $this->load->view('templates/footerAdmin');
     }
 
