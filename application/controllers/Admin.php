@@ -9,8 +9,9 @@ class Admin extends CI_Controller
         is_logged_in();
         $this->load->library('pagination');
     }
-    
-    public function performance(){
+
+    public function performance()
+    {
         $data['title'] = 'Search Performance';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
