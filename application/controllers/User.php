@@ -22,7 +22,7 @@ class User extends CI_Controller
             JOIN ip i ON l.ip_address = i.ip_address
             JOIN ruangan r ON i.ruangan_id = r.id
             WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
-                AND DATE(l.waktu_ambil) = CURDATE()
+                
             ORDER BY l.waktu_ambil DESC, l.last_seen ASC
             LIMIT 50)";
 
