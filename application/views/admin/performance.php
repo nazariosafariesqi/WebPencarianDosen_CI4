@@ -6,6 +6,8 @@
 
     <div class="row">
         <div class="col-lg">
+            <p>Rata-rata Eksekusi: <?= $formattedRataRataLamaEksekusi; ?> detik</p>
+            <p>Rata-rata Jumlah Data: <?= $formattedRataRataJumlahData; ?> data</p>
 
             <table class="table table-hover">
                 <thead>
@@ -18,9 +20,7 @@
                 </thead>
                 <tbody>
                     <?php $i = $offset + 1; ?>
-                    <?php $totalLamaEksekusi = 0; ?>
                     <?php foreach ($eksekusi as $e) : ?>
-                        <?php $totalLamaEksekusi += $e['lama_eksekusi']; ?>
                         <tr>
                             <th scope="row"><?= $i++; ?></th>
                             <td><?= $e['lama_eksekusi']; ?></td>
@@ -29,16 +29,13 @@
                         </tr>
                     <?php endforeach; ?>
 
-                    <?php $rataRataLamaEksekusi = $totalLamaEksekusi / $i; ?>
-                    <tr>
-                        <th colspan="4">Rata-rata Lama Eksekusi: <?= $rataRataLamaEksekusi; ?></th>
-                    </tr>
                 </tbody>
             </table>
+
             <?= $this->pagination->create_links(); ?>
+
         </div>
     </div>
-
 </div>
 <!-- /.container-fluid -->
 

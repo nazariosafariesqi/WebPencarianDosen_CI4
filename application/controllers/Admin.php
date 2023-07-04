@@ -58,6 +58,21 @@ class Admin extends CI_Controller
         $this->db->limit($limit, $offset);
         $this->db->order_by('waktu', 'desc');
         $data['eksekusi'] = $this->db->get('eksekusi')->result_array();
+
+        // Perhitungan rata-rata Lama Eksekusi
+        $totalLamaEksekusi = $this->db->select_sum('lama_eksekusi')->get('eksekusi')->row()->lama_eksekusi;
+        $totalCount = $this->db->count_all('eksekusi');
+        $rataRataLamaEksekusi = $totalLamaEksekusi / $totalCount;
+        $formattedRataRataLamaEksekusi = number_format($rataRataLamaEksekusi, 2);
+
+        // Perhitungan rata-rata Jumlah Data
+        $totalJumlahData = $this->db->select_sum('jumlah_data')->get('eksekusi')->row()->jumlah_data;
+        $rataRataJumlahData = $totalJumlahData / $totalCount;
+        $formattedRataRataJumlahData = number_format($rataRataJumlahData, 2);
+
+        $data['formattedRataRataLamaEksekusi'] = $formattedRataRataLamaEksekusi;
+        $data['formattedRataRataJumlahData'] = $formattedRataRataJumlahData;
+
         $data['offset'] = $offset;
 
         $this->load->view('templates/header', $data);
