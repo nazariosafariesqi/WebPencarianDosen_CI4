@@ -24,7 +24,7 @@ class User extends CI_Controller
             WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
                 AND DATE(l.waktu_ambil) = CURDATE()
             ORDER BY l.waktu_ambil DESC, l.last_seen ASC
-            LIMIT 5)";
+            LIMIT 50)";
 
             $results = $this->db->query($sql)->result_array();
         }
