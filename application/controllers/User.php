@@ -23,7 +23,7 @@ class User extends CI_Controller
             JOIN ruangan r ON i.ruangan_id = r.id
             WHERE p.nama_pemilik LIKE '%" . $keyword . "%'
                 AND DATE(l.waktu_ambil) = CURDATE()
-            ORDER BY l.waktu_ambil ASC, l.last_seen ASC
+            ORDER BY l.waktu_ambil DESC, l.last_seen ASC
             LIMIT 5)";
 
             $results = $this->db->query($sql)->result_array();
