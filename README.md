@@ -22,7 +22,8 @@ Repository Progress Pengerjaan Skripsi "Pencarian Dosen berdasarkan IP Address &
 
 ## Features
 
-- DHCP Leases Dashboard 
+- DHCP Leases Admin
+- Mikrotik Performance
 - Cari Dosen
 - My Profile
 - Edit Profile
