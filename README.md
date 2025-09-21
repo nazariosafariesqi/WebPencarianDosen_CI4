@@ -44,5 +44,5 @@ Repository Progress Pengerjaan Skripsi "Pencarian Dosen berdasarkan IP Address &
 **Deployment:** Ubuntu 22.04 LTS.
 
 
-![Logo](https://logowik.com/content/uploads/images/codeigniter-new6422.logowik.com.webp)
+![Logo](https://www.google.com/url?sa=i&url=https%3A%2F%2Flokomedia.web.id%2Fartikel%2Fdetail%2Fcodeigniter-4-alpha-1-rilis&psig=AOvVaw3op1si957GLMv3fk4crcxe&ust=1758552341558000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwjEpq-OjOqPAxUlwqACHQidGjUQjRx6BAgAEBo)
 
